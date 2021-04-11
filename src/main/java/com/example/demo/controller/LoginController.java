@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,7 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/sign_in")
-	public String first(@RequestParam(value = "username") String userName,
+	public String login(@RequestParam(value = "username") String userName,
 			@RequestParam(value = "psw") String password) {
 		User user = userRepository.findByUsername(userName);
 		if (user == null) {
@@ -50,7 +51,7 @@ public class LoginController {
 		}
 
 		userId = user.getId();
-		return ("sign_in");
+		return ("home");
 	}
 
 	@RequestMapping(value = "/sign_up", method = RequestMethod.GET)
@@ -155,29 +156,39 @@ public class LoginController {
 //
 //		return ("today_expense");
 //	}
-	
-	
+
 	// today expense
 
 	@PostMapping("/create_expense")
 	public ModelAndView welcome(@RequestParam(value = "expensename") String expenseName,
-			@RequestParam(value = "expensetype") String expenseType, @RequestParam(value = "date") Date date,
-			@RequestParam(value = "amount") int amount) {
-		Date today = new Date();
+			@RequestParam(value = "expensetype") String expenseType, @RequestParam(value = "amount") double amount) {
+		LocalDate today = LocalDate.now();
 		// create entity
 		// save entity
 		// List<Expense> expenses = repository.findByuseridAndDate(userId,today)
 		// model.addObject("expenses",expenses);
+		if (userId == 0) {
+			userId = 1;
+		}
+
 		ModelAndView model = new ModelAndView("/today_expense");
-		List<Expense> expenses = new ArrayList<>();
+		List<Expense> expenses = expenseRepository.findByUserIdAndDate(userId, today);
+		model.addObject("expenses", expenses);
+
+		if (expenseName == null || expenseName.isBlank()) {
+			return model;
+		}
+
 		Expense expense = new Expense();
 		expense.setExpenseName(expenseName);
 		expense.setExpenseType(expenseType);
 		expense.setAmount(amount);
-		expense.setDate(date);
+		expense.setDate(today);
+		expense.setUserId(userId);
 		expenseRepository.save(expense);
 
-		model.addObject("expenses", expenses);
+		expenses.add(expense);
+
 		return model;
 	}
 
@@ -185,8 +196,5 @@ public class LoginController {
 	public String today_expense(ModelMap model) {
 		return ("today_expense");
 	}
-	
-	
-
 
 }

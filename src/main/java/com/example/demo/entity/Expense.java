@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,11 +17,13 @@ public class Expense {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
 	private int expenseId;
-	private int id;
+	
+	private int userId;
+	
 	private String expenseName;
 	private String expenseType;
-	private int amount;
-	private Date date;
+	private double amount;
+	private LocalDate date;
 
 	public long getExpenseId() {
 		return expenseId;
@@ -29,12 +33,12 @@ public class Expense {
 		this.expenseId = expenseId;
 	}
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int id) {
+		this.userId = id;
 	}
 
 	public String getExpenseName() {
@@ -53,19 +57,19 @@ public class Expense {
 		this.expenseType = expenseType;
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

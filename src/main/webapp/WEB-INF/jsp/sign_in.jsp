@@ -98,13 +98,13 @@ button:hover {
 	<div class="logofile">
 		<img src="https://i.ibb.co/PmyZDDS/logo.png">
 	</div>
-	<form action="" class="signin" method="post">
+	<form action="sign_in" class="signin" method="post">
 		<div class="container">
 			<h3>Sign in</h3>
 			<label for="uname"><b>Username</b></label> <input type="text"
-				placeholder="Enter Username" name="uname" required> <label
+				placeholder="Enter Username" name="username" required> <label
 				for="pwd"><b>Password</b></label> <input type="password"
-				placeholder="Enter Password" name="pwd" required>
+				placeholder="Enter Password" name="psw" required>
 
 			<button type="submit" class="signinbtn">Login</button>
 		</div>
