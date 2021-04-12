@@ -284,7 +284,7 @@ ul.nav.navbar-nav a {
 						</ul></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="sign_in"><span
+					<li><a href="sign_in"><span 
 							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 				</ul>
 			</div>

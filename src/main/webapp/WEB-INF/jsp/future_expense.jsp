@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -247,7 +249,7 @@ element.style {
 					<div class="row">
 						<div class="col-lg-4 col-12 col-md-6">
 						<h4>FUTURE_EXPENSE</h4>
-							<form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+							<form action="future_expense" method="post">
 								<div class="row">
 									<div class="form-group">
 
@@ -259,7 +261,7 @@ element.style {
 				                    	<div  class="col-lg-12 col-12">
 				                    		<label> Expense_Type</label>
 				                        	<label for="expensetype"></label>
-												 <select id="expensetype" class="form-control">
+												 <select name="expensetype" id="expensetype" class="form-control">
 												    <option value="Cash">Cash</option>
 												    <option value="Online">Online</option>
 												    <option value="Debit Card">Debit Card</option>
@@ -301,7 +303,15 @@ element.style {
 				                        </tr>
 				                    </thead>
 				                    <tbody>
-
+										<c:forEach items="${expenses}" var="expense">
+									<tr>
+										
+										<td>${expense.expenseName}</td>
+										<td>${expense.expenseType}</td>
+										
+										<td>${expense.amount}</td>
+									</tr>
+								</c:forEach>
 				                    </tbody>
 				            </table>
 				            <div class="col-lg-12 col-12 col-md-12">
@@ -322,6 +332,113 @@ element.style {
 
 </html>
 
-<script>
+<!-- <script>
+var selectedRow = null
 
-</script>
+function onFormSubmit() {
+    // if (validate()) {
+        
+    // }
+    var formData = readFormData();
+        if (selectedRow == null)
+            insertNewRecord(formData);
+        else
+            updateRecord(formData);
+        resetForm();
+}
+
+function readFormData() {
+    var formData = {};
+
+    formData["expensename"] = document.getElementById("expensename").value;
+    formData["expensetype"] = document.getElementById("expensetype").value;
+    formData["amount"] = document.getElementById("amount").value;
+    formData["date"] = document.getElementById("date").value;
+    return formData;
+}
+
+function insertNewRecord(data) {
+	var sl = document.getElementById("sl").value;
+    var table = document.getElementById("exspense_manage").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow(table.length);
+    cell1 = newRow.insertCell(0);
+    cell1.innerHTML = sl;
+    cell2 = newRow.insertCell(1);
+    cell2.innerHTML = data.expensename;
+    cell3 = newRow.insertCell(2);
+    cell3.innerHTML = data.expensetype;
+    cell4 = newRow.insertCell(3);
+    cell4.innerHTML = data.amount;
+    cell5 = newRow.insertCell(4);
+    cell5.innerHTML = data.date;
+    cell5 = newRow.insertCell(5);
+    cell5.innerHTML = `<a onClick="onEdit(this)">Edit</a>
+                       <a onClick="onDelete(this)">Delete</a>`;
+}
+
+	$('#subbtn').click(function()
+	{
+		var amou = parseInt($('#amount').val());
+		var amouplus = parseInt($('#amou').val());
+		var total = amou + amouplus;
+		$('#amou').val(total);
+		$('.amou').html(total);
+
+		var sll =  $('#sl').val();
+		if(sll=='1')
+		{
+			++sll;
+			$('#sl').val(sll);
+		}
+		else
+		{
+			++sll;
+			$('#sl').val(sll);	
+		}
+	});
+
+function resetForm() {
+    document.getElementById("expensename").value = "";
+    document.getElementById("expensetype").value = "";
+    document.getElementById("amount").value = "";
+    document.getElementById("date").value = "";
+    selectedRow = null;
+}
+
+function onEdit(td) {
+    selectedRow = td.parentElement.parentElement;  
+    document.getElementById("expensename").value = selectedRow.cells[1].innerHTML;
+    document.getElementById("expensetype").value = selectedRow.cells[2].innerHTML;
+    document.getElementById("amount").value = selectedRow.cells[3].innerHTML;
+    document.getElementById("date").value = selectedRow.cells[4].innerHTML;
+    
+}
+function updateRecord(formData) {
+    selectedRow.cells[1].innerHTML = formData.expensename;
+    selectedRow.cells[2].innerHTML = formData.expensetype;
+    selectedRow.cells[3].innerHTML = formData.amount;
+    selectedRow.cells[4].innerHTML = formData.date;
+   
+}
+
+function onDelete(td) {
+    if (confirm('Are you sure to delete this record ?')) {
+        row = td.parentElement.parentElement;
+        document.getElementById("exspense_manage").deleteRow(row.rowIndex);
+        resetForm();
+    }
+}
+  /* function validate() {
+     isValid = true;
+    if (document.getElementById("expenseid").value == "") {
+         isValid = false;    
+         document.getElementById("expenseidValidationError").classList.remove("hide");
+    } else {
+         isValid = true;
+         if (!document.getElementById("expenseidValidationError").classList.contains("hide"))
+             document.getElementById("expenseidValidationError").classList.add("hide");
+    }
+     return isValid;
+ }  */
+ 
+</script> -->

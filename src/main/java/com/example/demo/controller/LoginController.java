@@ -38,7 +38,7 @@ public class LoginController {
 	private ExpenseRepository expenseRepository;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String first(ModelMap model) {
+	public String login(ModelMap model) {
 		return ("sign_in");
 	}
 
@@ -101,10 +101,10 @@ public class LoginController {
 		return ("profile");
 	}
 
-	@RequestMapping(value = "/future_expense", method = RequestMethod.GET)
-	public String future_expense(ModelMap model) {
-		return ("future_expense");
-	}
+//	@RequestMapping(value = "/future_expense", method = RequestMethod.GET)
+//	public String future_expense(ModelMap model) {
+//		return ("future_expense");
+//	}
 
 	@RequestMapping(value = "/past_expense", method = RequestMethod.GET)
 	public String showpast_expensepage(ModelMap model) {
@@ -141,23 +141,7 @@ public class LoginController {
 		return userRepository.findAll();
 	}
 
-//	@RequestMapping(value = "/create_expense", method = RequestMethod.POST)
-//	public String showtoday_expensepage(@RequestParam(value = "expensename") String expenseName,
-//
-//			@RequestParam(value = "expensetype") String expenseType, @RequestParam(value = "amount") int amount,
-//
-//			@RequestParam(value = "date") Date date) {
-//		Expense expense = new Expense();
-//		expense.setExpenseName(expenseName);
-//		expense.setExpenseType(expenseType);
-//		expense.setAmount(amount);
-//		expense.setDate(date);
-//		expenseRepository.save(expense);
-//
-//		return ("today_expense");
-//	}
-
-	// today expense
+	// TODAY EXPENSE
 
 	@PostMapping("/create_expense")
 	public ModelAndView welcome(@RequestParam(value = "expensename") String expenseName,
@@ -193,8 +177,52 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/today_expense", method = RequestMethod.GET)
-	public String today_expense(ModelMap model) {
+	public String todayexpense(ModelMap model) {
 		return ("today_expense");
+	}
+
+	// FUTURE EXPENSE
+
+	@PostMapping("/future_expense")
+	public ModelAndView Future(@RequestParam(value = "expensename") String expenseName,
+//			@RequestParam(value = "expenseid") int expenseId,
+
+			@RequestParam(value = "expensetype") String expenseType, @RequestParam(value = "amount") double amount,
+			@RequestParam(value = "date") Date date)
+	{
+		// create entity // save entity // List<Expense> expenses
+		// =repository.findByuseridAndDate(userId,today) 
+		// model.addObject("expenses", expenses);
+		LocalDate today = LocalDate.now();
+		if (userId == 0) {
+			userId = 1;
+		}
+
+		ModelAndView model = new ModelAndView("/future_expense");
+		List<Expense> expenses = expenseRepository.findByUserIdAndDate(userId,today);
+		model.addObject("expenses", expenses);
+
+		if (expenseName == null || expenseName.isBlank()) {
+			return model;
+		}
+
+		Expense expense = new Expense();
+//		expense.setExpenseId(expenseId);
+		expense.setExpenseName(expenseName);
+		expense.setExpenseType(expenseType);
+		expense.setAmount(amount);
+//		expense.setDate(date);
+		expense.setUserId(userId);
+		expenseRepository.save(expense);
+
+		expenses.add(expense);
+
+		return model;
+	}
+
+	@RequestMapping(value = "/future_expense", method = RequestMethod.GET)
+	public String futureexpense(ModelMap model) {
+		return ("future_expense");
 	}
 
 }

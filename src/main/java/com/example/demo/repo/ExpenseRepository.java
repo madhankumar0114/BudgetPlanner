@@ -16,5 +16,7 @@ import com.example.demo.entity.User;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
 	List<Expense> findByUserIdAndDate(int userId, LocalDate date);
+	
+//	List<Expense> findByUserIdAndDate(int userId, Date date);
 
 }
