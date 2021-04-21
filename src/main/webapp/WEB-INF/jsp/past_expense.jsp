@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
 <title>PAST EXPENSE</title>
@@ -239,12 +241,10 @@ ul.nav.navbar-nav a {
 				<div class="form-class mt-5 mb-5">
 					<div class="row">
 						<div class="col-lg-4 col-12 col-md-6">
-						<h4>PAST_EXPENSE</h4>
-							<form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+						<h4>PAST EXPENSE</h4>
+						<form action="past_expense" method="post">
 								<div class="row">
 									<div class="form-group">
-
-				             
 
 				                     	<div class="col-lg-12 col-12 mb-2">
 				                        	<label>Start Date</label>
@@ -269,7 +269,7 @@ ul.nav.navbar-nav a {
 							<table class="table table-responsive" id="exspense_manage">
 				                    <thead>
 				                        <tr>
-				                            <th>Sl.No</th>
+				                           
 				                            <th>Expense Name</th>
 				                            <th>Expense Type</th>
 				                            <th>Amount</th>
@@ -278,8 +278,15 @@ ul.nav.navbar-nav a {
 				                        </tr>
 				                    </thead>
 				                    <tbody>
-
-				                    </tbody>
+								<c:forEach items="${expenses}" var="expense">
+									<tr>
+										<td>${expense.expenseName}</td>
+										<td>${expense.expenseType}</td>
+										<td>${expense.amount}</td>
+										<td>${expense.date}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
 				            </table>
 				            <div class="col-lg-12 col-12 col-md-12">
 				            	<div align="right">

@@ -1,3 +1,6 @@
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 <html>
 <head>
 <title>HOME</title>
@@ -122,15 +125,7 @@ a{
 .mb-8{
 	margin-bottom:80 !important;
 }
-.cardbody ul {
-    list-style: none;
-    margin: 20px 0 0 0;
-}
-.cardbody ul li {
-    padding: 18px;
-    background: #fbfbfb;
-    margin-top: 10px;
-}
+
 
 
 .logofile{    
@@ -285,21 +280,11 @@ text-align: center;
 			<div class="container">
 				<div class="form-class mt-5 mb-8">
 					<div class="row">
-						
-						<div class="col-lg-4 col-12 col-md-6" style="padding: 25px;background: #eee;border-radius: 20px;border-bottom: 3px solid #8ed088;">
-						   
-						   <h3>PROFILE_UPDATE</h3>
-						   
-								 <div id="profile-container">
-							   <image id="profileImage" src="https://dunnvision.com/files/2019/05/Profile-512.png" />
-							</div>
-							<input id="imageUpload" type="file" 
-							       name="profile_photo" placeholder="Photo" required="" capture>
-													  
+							   
+						   <h3>PROFILE UPDATE</h3>
+						   <form form action="profile" method="post">						   
+						   						 					  
 						  
-						  
-						    <div class="cardbody">
-						    	<ul>
 						    		<div class="col-lg-12 col-12">
 				                        	<label>Name</label>
 				                        	<input type="text" name="name" id="name" class="form-control">
@@ -316,19 +301,19 @@ text-align: center;
 				                        	<label>Phone</label>
 				                        	<input type="tel" name="phone" id="phone" class="form-control"><br>
 				                   	</div>		                    					                   	
-						    	</ul>
+						    	
 						    	<div  class="form-action-buttons">
-					                        <input type="submit" id="subbtn" value="Update" class="btn btn-info">
-					                        <input type="submit" id="subbtn" value="Edit" class="btn btn-info">
+					                        <input type="submit" id="subbtn" value="submit" class="btn btn-info">
+					                        <input type="submit" id="subbtn" value="edit" class="btn btn-info">
 					                    </div>
+					                 </form>   
+					                    
 						    </div>
 						</div>
 
 						
 								</div>
-							</div>
-						</div>
-			
+						
 	    </section>
 
 	<footer class="footer">

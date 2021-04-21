@@ -276,20 +276,21 @@ ul.nav.navbar-nav a {
 			<div class="form-class mt-5 mb-5">
 				<div class="row">
 					<div class="col-lg-4 col-12 col-md-6">
-						<h4>TODAY_EXPENSE</h4>
-						<form onsubmit="event.preventDefault();onFormSubmit();" autocomplete="off">
+						<h4>TODAY EXPENSE</h4>
+					
 						<form action="create_expense" method="post">
+					
 
 							<div class="row">
 								<div class="form-group">
 
 									<div class="col-lg-12 col-12">
-										<label>Expense_Name</label> <input type="text"
+										<label>Expense Name</label> <input type="text"
 											name="expensename" id="expensename" class="form-control">
 									</div>
 
 									<div class="col-lg-12 col-12">
-										<label> Expense_Type</label> <label for="expensetype"></label>
+										<label> Expense Type</label> <label for="expensetype"></label>
 										<select name="expensetype" id="expensetype"
 											class="form-control">
 											<option value="Cash">Cash</option>
@@ -307,15 +308,15 @@ ul.nav.navbar-nav a {
 
 
 									<div class="form-action-buttons">
-										<input type="submit" id="subbtn" value="Submit"
-											class="btn btn-info"> <input type="hidden" value=""
-											id="sl"> <input type="hidden" value="0" id="amou">
+										<input type="submit" id="subbtn" value="Submit"class="btn btn-info"> 
+											<input type="hidden" value=""id="sl"> 
+											<input type="hidden" value="0" id="amou">
 									</div>
 
 								</div>
 							</div>
 						</form>
-						</form>
+					
 						
 					</div>
 					<div class="col-lg-8 col-12 col-md-6">
@@ -350,94 +351,51 @@ ul.nav.navbar-nav a {
 	</section>
 
 	<footer class="footer">
-		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved
-			| @developed by</h5>
+		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved @developed by</h5>
 	</footer>
 </body>
 
 </html>
 
-<script>
-var selectedRow = null
+<!-- <script>
+var qtyTotal = 0;
+var priceTotal = 0;
 
-function onFormSubmit() {
-	
-     /*  if (validate()) {
-        
-     } */
-    var formData = readFormData();
-        if (selectedRow == null)
-            insertNewRecord(formData);
-        else
-            updateRecord(formData);
-        resetForm(); 
+function addProduct() {
+    var productID = document.getElementById("expenseName").value;
+    var product_desc = document.getElementById("expenseType").value;
+    var qty = document.getElementById("amount").value;
+    // qtyTotal = qtyTotal + parseInt(qty);
+    //document.getElementById("qtyTotals").innerHTML=qtyTotal;
+   
+    //priceTotal = priceTotal + parseInt(price);
+    //document.getElementById("priceTotals").innerHTML=priceTotal;
+    var table=document.getElementById("exspense_manage");
+    var row=table.insertRow(-1);
+    var cell1=row.insertCell(0);
+    var cell2=row.insertCell(1);
+    var cell3=row.insertCell(2);
+    var cell4=row.insertCell(3);
+    var cell5=row.insertCell(4);
+    var cell6=row.insertCell(5);
+    cell1.innerHTML=expenseName;
+    cell2.innerHTML=expenseType;
+    cell3.innerHTML=amount;        
+     
+    cell4.innerHTML=' <button type="button" onClick="editProduct();"/>Edit</button>'; 
+    cell5.innerHTML ='<button type="button" onClick="deleteProduct(this);">Delete</button>';             
 }
 
-function readFormData() {
-    var formData = {};
+function editProduct(){
+    
 
-    formData["expensename"] = document.getElementById("expensename").value;
-    formData["expensetype"] = document.getElementById("expensetype").value;
-    formData["amount"] = document.getElementById("amount").value;
-    return formData;
-}
-
-function insertNewRecord(data) {
-    var table = document.getElementById("exspense_manage").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow(table.length);
-    cell1 = newRow.insertCell(0);
-    cell1.innerHTML = sl;
-    cell2 = newRow.insertCell(1);
-    cell2.innerHTML = data.expensename;
-    cell3 = newRow.insertCell(2);
-    cell3.innerHTML = data.expensetype;
-    cell4 = newRow.insertCell(3);
-    cell4.innerHTML = data.amount;
-    cell4 = newRow.insertCell(4);
-    cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                       <a onClick="onDelete(this)">Delete</a>`;
-}
-
-
-function resetForm() {
-    document.getElementById("expensename").value = "";
-    document.getElementById("expensetype").value = "";
-    document.getElementById("amount").value = "";
-    selectedRow = null;
-}
-
-function onEdit(td) {
-    selectedRow = td.parentElement.parentElement;  
-    document.getElementById("expensename").value = selectedRow.cells[1].innerHTML;
-    document.getElementById("expensetype").value = selectedRow.cells[2].innerHTML;
-    document.getElementById("amount").value = selectedRow.cells[3].innerHTML;
+    document.getElementById("expenseName").value = productID;
+    document.getElementById("expenseType").value = product_desc;
+    document.getElementById("amount").value = qty;
     
 }
-function updateRecord(formData) {
-    selectedRow.cells[1].innerHTML = formData.expensename;
-    selectedRow.cells[2].innerHTML = formData.expensetype;
-    selectedRow.cells[3].innerHTML = formData.amount;
-   
+function deleteProduct(node){    
+r=node.parentNode.parentNode;
+r.parentNode.removeChild(r);
 }
-
-function onDelete(td) {
-    if (confirm('Are you sure to delete this record ?')) {
-        row = td.parentElement.parentElement;
-        document.getElementById("exspense_manage").deleteRow(row.rowIndex);
-        resetForm();
-    }
-}
-  /* function validate() {
-     isValid = true;
-    if (document.getElementById("expenseid").value == "") {
-         isValid = false;    
-         document.getElementById("expenseidValidationError").classList.remove("hide");
-    } else {
-         isValid = true;
-         if (!document.getElementById("expenseidValidationError").classList.contains("hide"))
-             document.getElementById("expenseidValidationError").classList.add("hide");
-    }
-     return isValid;
- }  */
- 
-</script>
+</script> -->

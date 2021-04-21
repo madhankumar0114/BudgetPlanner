@@ -248,18 +248,18 @@ element.style {
 				<div class="form-class mt-5 mb-5">
 					<div class="row">
 						<div class="col-lg-4 col-12 col-md-6">
-						<h4>FUTURE_EXPENSE</h4>
+						<h4>FUTURE EXPENSE</h4>
 							<form action="future_expense" method="post">
 								<div class="row">
 									<div class="form-group">
 
 				                    	<div class="col-lg-12 col-12">
-				                        	<label>Expense_Name</label>
+				                        	<label>Expense Name</label>
 				                        	<input type="text" name="expensename" id="expensename" class="form-control">
 				                    	</div>
 
 				                    	<div  class="col-lg-12 col-12">
-				                    		<label> Expense_Type</label>
+				                    		<label> Expense Type</label>
 				                        	<label for="expensetype"></label>
 												 <select name="expensetype" id="expensetype" class="form-control">
 												    <option value="Cash">Cash</option>
@@ -280,11 +280,12 @@ element.style {
 				                        	<input type="date" name="date" id="date" class="form-control">
 				                    	</div>
 
-					                    <div  class="form-action-buttons">
-					                        <input type="submit" id="subbtn" value="Submit" class="btn btn-info">
-					                        <input type="hidden" value="" id="sl">
-					                        <input type="hidden" value="0" id="amou">
-					                    </div>
+					                    <div class="form-action-buttons">
+										<input type="submit" id="subbtn" value="Submit"class="btn btn-info"> 
+											<input type="hidden" value=""id="sl"> 
+											<input type="hidden" value="0" id="amou">
+									</div>
+
 
 				                    </div>
 			                	</div>
@@ -294,7 +295,7 @@ element.style {
 							<table class="table table-responsive" id="exspense_manage">
 				                    <thead>
 				                        <tr>
-				                            <th>Sl.No</th>
+				                           
 				                            <th>Expense Name</th>
 				                            <th>Expense Type</th>
 				                            <th>Amount</th>
@@ -308,8 +309,8 @@ element.style {
 										
 										<td>${expense.expenseName}</td>
 										<td>${expense.expenseType}</td>
-										
 										<td>${expense.amount}</td>
+										<td>${expense.date}</td>
 									</tr>
 								</c:forEach>
 				                    </tbody>

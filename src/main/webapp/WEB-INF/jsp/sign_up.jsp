@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SIGN_UP</title>
+<title>SIGN UP</title>
 <style>
 h3 {
 	text-align: center;
@@ -130,8 +130,8 @@ button:hover {
 			</div>
 
 			<div class="forgot">
-				<span> <a class="pass" href="sign_in">sign in</a></span><br /> <span>
-					<a class="pass" href="forgot" target="_blank">forgot password?</a>
+				<span> <a class="pass" href="sign_in">Sign in</a></span><br /> <span>
+					<a class="pass" href="forgot" target="_blank">Forgot password?</a>
 				</span>
 			</div>
 		</div>

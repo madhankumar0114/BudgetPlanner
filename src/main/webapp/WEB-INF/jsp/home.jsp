@@ -157,7 +157,7 @@ a {
 }
 
 .cardbody ul li {
-	padding: 18px;
+	padding: 28px;
 	background: #fbfbfb;
 	margin-top: 10px;
 }
@@ -298,12 +298,7 @@ ul.nav.navbar-nav a {
 
 					<div class="col-lg-4 col-12 col-md-6"
 						style="padding: 25px; background: #eee; border-radius: 10px; border-bottom: 3px solid #8ed088;">
-						<div class="cardbox">
-							<a href="#"> <img
-								src="https://demos.creative-tim.com/argon-dashboard/assets/img/theme/team-4.jpg"
-								width="100%">
-							</a>
-						</div>
+						
 						<div class="cardbody">
 							<ul>
 								<li>Name</li>
@@ -312,6 +307,11 @@ ul.nav.navbar-nav a {
 								<li>Phone</li>
 								<li><a href="profile">Edit</a></li>
 								<li><a href="sign_in"> Logout</a></li>
+							</ul>
+							
+							<ul>
+						
+							
 							</ul>
 						</div>
 					</div>

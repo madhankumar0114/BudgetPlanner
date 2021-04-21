@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SIGN_IN</title>
+<title>SIGN IN</title>
 <style>
 body {
 	background-image: url(https://i.ibb.co/mq1qNXy/43118-copy.png);
@@ -110,8 +110,8 @@ button:hover {
 		</div>
 
 		<div class="forgot">
-			<span> <a class="pass" href="forgot" target="_blank">forgot
-					password?</a></span> <br /> <span> <a class="pass" href="sign_up">sign
+			<span> <a class="pass" href="forgot" target="_blank">Forgot
+					password?</a></span> <br /> <span> <a class="pass" href="sign_up">Sign
 					up</a></span>
 		</div>
 	</form>

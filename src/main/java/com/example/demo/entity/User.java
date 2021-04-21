@@ -1,5 +1,8 @@
 package com.example.demo.entity;
 
+import java.sql.Blob;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +18,12 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phone;
+//	private Blob image;
+	private Date date;
+
+	
+
+	
 
 	public int getId() {
 		return id;
@@ -62,6 +71,23 @@ public class User {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	
+//	public Blob getImage() {
+//		return image;
+//	}
+//
+//	public void setImage(Blob image) {
+//		this.image = image;
+//	}
+//	
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 }
