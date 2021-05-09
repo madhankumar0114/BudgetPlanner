@@ -3,365 +3,453 @@
 <head>
 <title>Calculator</title>
 <style>
-body{
-background-image:url(https://i.ibb.co/mq1qNXy/43118-copy.png);
-	background-repeat: repeat;
-	font-family: sans-serif;
+:root {
+    --dark-body: #4d4c5a;
+    --dark-main: #141529;
+    --dark-second: #79788c;
+    --dark-hover: #323048;
+    --dark-text: #f8fbff;
+
+    --light-body: #f3f8fe;
+    --light-main: #fdfdfd;
+    --light-second: #c3c2c8;
+    --light-hover: #edf0f5;
+    --light-text: #151426;
+
+    --blue: #0000ff;
+    --white: #fff;
+
+    --shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+    --font-family: cursive;
 }
 
-#background {
-    width:350px;
-    height:500px;
-    opacity: 0.8;
-    background:gray;
-    margin:50px auto;
+.dark {
+    --bg-body: var(--dark-body);
+    --bg-main: var(--dark-main);
+    --bg-second: var(--dark-second);
+    --color-hover: var(--dark-hover);
+    --color-txt: var(--dark-text);
 }
 
-button {
-    border:0;
-    color:#fff;
+.light {
+    --bg-body: var(--light-body);
+    --bg-main: var(--light-main);
+    --bg-second: var(--light-second);
+    --color-hover: var(--light-hover);
+    --color-txt: var(--light-text);
 }
-#result {
-    display:block;
-    font-family: sans-serif;
-    width:300px;
-    height:50px;
-    margin:10px auto;
-    text-align: right;
-    border:0;
-    background:#3b3535;
-    color:#fff;
-    padding-top:20px;
-    font-size:20px;
-    margin-left: 20px;
-    outline: none;
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-family);
+    background-color: var(--bg-body);
+}
+
+.calendar {
+    height: max-content;
+    width: max-content;
+    background-color: var(--bg-main);
+    border-radius: 30px;
+    padding: 20px;
+    position: relative;
     overflow: hidden;
-    letter-spacing: 4px;
+    /* transform: scale(1.25); */
+}
+
+.light .calendar {
+    box-shadow: var(--shadow);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--color-txt);
+    padding: 10px;
+}
+
+.calendar-body {
+    padding: 10px;
+}
+
+.calendar-week-day {
+    height: 50px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: 600;
+}
+
+.calendar-week-day div {
+    display: grid;
+    place-items: center;
+    color: var(--bg-second);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    color: var(--color-txt);
+}
+
+.calendar-days div {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
     position: relative;
-    top:10px;
+    cursor: pointer;
+    animation: to-top 1s forwards;
+    /* border-radius: 50%; */
 }
 
-#result:hover {
-    
-    cursor: text;
-    
+.calendar-days div span {
+    position: absolute;
 }
 
-#first-rows {
-    margin-bottom: 30px;
+.calendar-days div:hover span {
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.calendar-days div span:nth-child(1),
+.calendar-days div span:nth-child(3) {
+    width: 2px;
+    height: 0;
+    background-color: var(--color-txt);
+}
+
+.calendar-days div:hover span:nth-child(1),
+.calendar-days div:hover span:nth-child(3) {
+    height: 100%;
+}
+
+.calendar-days div span:nth-child(1) {
+    bottom: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(3) {
+    top: 0;
+    right: 0;
+}
+
+.calendar-days div span:nth-child(2),
+.calendar-days div span:nth-child(4) {
+    width: 0;
+    height: 2px;
+    background-color: var(--color-txt);
+}
+
+.calendar-days div:hover span:nth-child(2),
+.calendar-days div:hover span:nth-child(4) {
+    width: 100%;
+}
+
+.calendar-days div span:nth-child(2) {
+    top: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+}
+
+.calendar-days div:hover span:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.calendar-days div:hover span:nth-child(3) {
+    transition-delay: 0.4s;
+}
+
+.calendar-days div:hover span:nth-child(4) {
+    transition-delay: 0.6s;
+}
+
+.calendar-days div.curr-date,
+.calendar-days div.curr-date:hover {
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 50%;
+}
+
+.calendar-days div.curr-date span {
+    display: none;
+}
+
+.month-picker {
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.month-picker:hover {
+    background-color: var(--color-hover);
+}
+
+.year-picker {
+    display: flex;
+    align-items: center;
+}
+
+.year-change {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.year-change:hover {
+    background-color: var(--color-hover);
+}
+
+.calendar-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.toggle {
+    display: flex;
+}
+
+.toggle span {
+    margin-right: 10px;
+    color: var(--color-txt);
+}
+
+.dark-mode-switch {
     position: relative;
-    top:10px;
-}
-
-.rows {
-    width:300px;
-    margin-top:30px;
-}
-
-#delete {
-    width:120px;
-    height:50px;
-    margin-left:25px;
-    border-radius:4px;
-}
-
-/* Aligning the division and dot button properly */
-.fall-back {
-    margin-left:40px !important;
-}
-
-/* Aligning the addition and equals to button properly */
-.align {
-    margin-left: 6px !important;
-}
-
-/* Button styling */
-.btn-style {
-    width:50px;
-    height:50px;
-    margin-left:20px;
-    border-radius:10px;
-}
-
-.eqn {
-    width:50px;
-    height:50px;
-    margin-left:20px;
-    border-radius:4px;
-}
-
-.first-child {
- margin-left:25px;
-}
-
-
-/* Adding background color to the number values */
- .num-bg {
-    background:#000;
-    color:#fff;
-    font-size:26px;
-    cursor:pointer;
-    outline:none;
-    border-bottom:3px solid #333;
-}
-
- .num-bg:active {
-    background:#000;
-    color:#fff;
-    font-size:26px;
-    cursor:pointer;
-    outline:none;
-    box-shadow: inset 5px 5px 5px #555;
-}
-
-/*Adding background color to the operator values */ 
-.opera-bg {
-    background:#333;
-    color:#fff;
-    font-size:26px;
+    width: 48px;
+    height: 25px;
+    border-radius: 14px;
+    background-color: var(--bg-second);
     cursor: pointer;
-    outline:none;
-    border-bottom:10px solid #555;
 }
 
-.opera-bg:active {
-    background:#333;
-    color:#fff;
-    font-size:26px;
+.dark-mode-switch-ident {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.2s ease-in-out;
+}
+
+.dark .dark-mode-switch .dark-mode-switch-ident {
+    top: 2px;
+    left: calc(2px + 50%);
+}
+
+.month-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-main);
+    padding: 20px;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px;
+    display: grid;
+    transform: scale(1.5);
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.month-list.show {
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.month-list > div {
+    display: grid;
+    place-items: center;
+}
+
+.month-list > div > div {
+    width: 100%;
+    padding: 5px 20px;
+    border-radius: 10px;
+    text-align: center;
     cursor: pointer;
-    outline:none;
-    box-shadow: inset 4px 4px 4px #555;
+    color: var(--color-txt);
 }
 
-/*Adding a background color to the delete button */
-.del-bg {
-    background:#24b4de;
-    color:#fff;
-    font-size:26px;
-    cursor: pointer;
-    outline:none;
-    border-bottom:10px solid #399cb9;
+.month-list > div > div:hover {
+    background-color: var(--color-hover);
 }
 
-.del-bg:active {
-    background:#24b4de;
-    color:#fff;
-    font-size:26px;
-    cursor: pointer;
-    outline:none;
-    box-shadow: inset 4px 4px 4px #399cb9;
-}
-
-/*Adding a background color to the equals to button */
-#eqn-bg {
-    background:#17a928;
-    color:#fff;
-    font-size:26px;
-    cursor: pointer;
-    outline:none;
-    border-bottom:10px solid #1f7a29;
-}
-
-#eqn-bg:active {
-    background:#17a928;
-    color:#fff;
-    font-size:26px;
-    cursor: pointer;
-    outline:none;
-    box-shadow: inset 4px 4px 4px #1f7a29;
-}
-
-@-webkit-keyframes bgChange {
+@keyframes to-top {
     0% {
-       background:#24b4de; 
+        transform: translateY(100%);
+        opacity: 0;
     }
-    
-    50% {
-      background:#17a928;
-    }
-    
     100% {
-        background:#399cb9;
+        transform: translateY(0);
+        opacity: 1;
     }
 }
-.logofile{    text-align: center;
-    background: #fff;
-    padding: 9px 0;
-    width: 100%;}
-  .logofile img{  width: 170px; }
+
 </style>
-<body><div class="logofile"><img src="https://i.ibb.co/PmyZDDS/logo.png"></div></body>
-<script>
-
-window.onload = function() {
-
-	var current,
-	    screen,
-	    output,
-	    limit,
-	    zero,
-	    period,
-	    operator;
-	    
-	    screen = document.getElementById("result");
-
-	var elem = document.querySelectorAll(".num");
-	    
-	      var len = elem.length;
-	    
-	      for(var i = 0; i < len; i++ ) {
-	        
-	        elem[i].addEventListener("click",function() {
-	                  
-	            num = this.value;
-	                     
-	            output = screen.innerHTML +=num;
-	                  
-	            limit = output.length;
-	         
-	         if(limit > 16 ) {
-	        
-	         alert("Sorry no more input is allowed");
-	             
-	       }
-	       
-	     },false);
-	        
-	    } 
-
-	    document.querySelector(".zero").addEventListener("click",function() {
-	        
-	        zero = this.value;
-	        
-	        if(screen.innerHTML === "") {
-	            
-	           output = screen.innerHTML = zero;  
-	        }
-	        
-	        else if(screen.innerHTML === output) {
-	            
-	         output = screen.innerHTML +=zero;
-	            
-	        }
-	          
-	    },false);
-	    
-	    document.querySelector(".period").addEventListener("click",function() {
-	        
-	        period = this.value;
-	        
-	        if(screen.innerHTML === "") {
-	            
-	         output = screen.innerHTML = screen.innerHTML.concat("0.");
-	            
-	         }
-	    
-	        else if(screen.innerHTML === output) {
-	        
-	          screen.innerHTML = screen.innerHTML.concat(".");
-	            
-	        }
-	        
-	    },false);
-	    
-	    
-	    document.querySelector("#eqn-bg").addEventListener("click",function() {
-	        
-	      if(screen.innerHTML === output) {
-	          
-	        screen.innerHTML = eval(output);
-	        
-	        output = screen.innerHTML;
-	        
-	      }
-	        
-	      else {
-	            screen.innerHTML = "";
-	      }
-	          
-	    },false);
-	    
-	 document.querySelector("#delete").addEventListener("click",function() {
-	        
-	        screen.innerHTML = "";
-	        
-	    },false);
-	    
-	   
-	     var elem1 = document.querySelectorAll(".operator");
-	    
-	      var len1 = elem1.length;
-	    
-	      for(var i = 0; i < len1; i++ ) {
-	        
-	        elem1[i].addEventListener("click",function() {
-	         
-	        operator = this.value;
-	         
-	         if(screen.innerHTML === "") {
-	            
-	            screen.innerHTML = screen.innerHTML.concat("");
-	            
-	        }
-	        
-	        else if(output) {
-	        
-	            screen.innerHTML = output.concat(operator);
-	            
-	        }
-	           
-	    },false);
-	          
-	      }   
-	}
-
-</script>
 </head>
-<body>
 
+<body class="light">
 
-<div id="background"><!-- Main background -->
-             
-        <div id="result"></div>
-             
-         <div id="main">
-             <div id="first-rows">
-              <button class="del-bg" id="delete">Del</button>
-                 <button value="%" class="btn-style operator opera-bg fall-back">%</button>
-                 <button value="+" class="btn-style opera-bg value align operator">+</button>
-                 </div>
-                 
-               <div class="rows">
-             <button value="7" class="btn-style num-bg num first-child">7</button>
-                 <button value="8" class="btn-style num-bg num">8</button>
-                 <button value="9" class="btn-style num-bg num">9</button>
-                 <button value="-" class="btn-style opera-bg operator">-</button>
-                 </div>
-                 
-                 <div class="rows">
-                 <button value="4" class="btn-style num-bg num first-child">4</button>
-                 <button value="5" class="btn-style num-bg num">5</button>
-                 <button value="6" class="btn-style num-bg num">6</button>
-                 <button value="*" class="btn-style opera-bg operator">x</button>
-                 </div>
-                 
-                 <div class="rows">
-                 <button value="1" class="btn-style num-bg num first-child">1</button>
-                 <button value="2" class="btn-style num-bg num">2</button>
-                 <button value="3" class="btn-style num-bg num">3</button>
-                 <button value="/" class="btn-style opera-bg operator">/</button>
-                 </div>
-                 
-                 <div class="rows">
-                 <button value="0" class="num-bg zero" id="delete">0</button>
-                 <button value="." class="btn-style num-bg period fall-back">.</button>
-                 <button value="=" id="eqn-bg" class="eqn align">=</button>
-                 </div>
-                
-             </div>
-         
-         </div>
-        
-        
+    <div class="calendar">
+        <div class="calendar-header">
+            <span class="month-picker" id="month-picker">February</span>
+            <div class="year-picker">
+                <span class="year-change" id="prev-year">
+                    <pre><</pre>
+                </span>
+                <span id="year">2021</span>
+                <span class="year-change" id="next-year">
+                    <pre>></pre>
+                </span>
+            </div>
+        </div>
+        <div class="calendar-body">
+            <div class="calendar-week-day">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-days"></div>
+        </div>
+        <div class="calendar-footer">
+            <div class="toggle">
+                <span>Dark Mode</span>
+                <div class="dark-mode-switch">
+                    <div class="dark-mode-switch-ident"></div>
+                </div>
+            </div>
+        </div>
+        <div class="month-list"></div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
+
 </html>
+<script>
+let calendar = document.querySelector('.calendar')
+
+const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+isLeapYear = (year) => {
+    return (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) || (year % 100 === 0 && year % 400 ===0)
+}
+
+getFebDays = (year) => {
+    return isLeapYear(year) ? 29 : 28
+}
+
+generateCalendar = (month, year) => {
+
+    let calendar_days = calendar.querySelector('.calendar-days')
+    let calendar_header_year = calendar.querySelector('#year')
+
+    let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    calendar_days.innerHTML = ''
+
+    let currDate = new Date()
+    if (!month) month = currDate.getMonth()
+    if (!year) year = currDate.getFullYear()
+
+    let curr_month = `${month_names[month]}`
+    month_picker.innerHTML = curr_month
+    calendar_header_year.innerHTML = year
+
+    // get first day of month
+    
+    let first_day = new Date(year, month, 1)
+
+    for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+        let day = document.createElement('div')
+        if (i >= first_day.getDay()) {
+            day.classList.add('calendar-day-hover')
+            day.innerHTML = i - first_day.getDay() + 1
+            day.innerHTML += `<span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>`
+            if (i - first_day.getDay() + 1 === currDate.getDate() && year === currDate.getFullYear() && month === currDate.getMonth()) {
+                day.classList.add('curr-date')
+            }
+        }
+        calendar_days.appendChild(day)
+    }
+}
+
+let month_list = calendar.querySelector('.month-list')
+
+month_names.forEach((e, index) => {
+    let month = document.createElement('div')
+    month.innerHTML = `<div data-month="${index}">${e}</div>`
+    month.querySelector('div').onclick = () => {
+        month_list.classList.remove('show')
+        curr_month.value = index
+        generateCalendar(index, curr_year.value)
+    }
+    month_list.appendChild(month)
+})
+
+let month_picker = calendar.querySelector('#month-picker')
+
+month_picker.onclick = () => {
+    month_list.classList.add('show')
+}
+
+let currDate = new Date()
+
+let curr_month = {value: currDate.getMonth()}
+let curr_year = {value: currDate.getFullYear()}
+
+generateCalendar(curr_month.value, curr_year.value)
+
+document.querySelector('#prev-year').onclick = () => {
+    --curr_year.value
+    generateCalendar(curr_month.value, curr_year.value)
+}
+
+document.querySelector('#next-year').onclick = () => {
+    ++curr_year.value
+    generateCalendar(curr_month.value, curr_year.value)
+}
+
+let dark_mode_toggle = document.querySelector('.dark-mode-switch')
+
+dark_mode_toggle.onclick = () => {
+    document.querySelector('body').classList.toggle('light')
+    document.querySelector('body').classList.toggle('dark')
+}
+</script>        

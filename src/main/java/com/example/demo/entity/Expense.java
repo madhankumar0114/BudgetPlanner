@@ -15,12 +15,11 @@ import java.util.Date;
 public class Expense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
 	private int expenseId;
 	
 	private int userId;
-	
 	private String expenseName;
+	private String category;
 	private String expenseType;
 	private double amount;
 	private LocalDate date;
@@ -47,6 +46,14 @@ public class Expense {
 
 	public void setExpenseName(String expenseName) {
 		this.expenseName = expenseName;
+	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getExpenseType() {

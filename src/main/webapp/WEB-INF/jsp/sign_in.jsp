@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>SIGN IN</title>
 <style>
 body {
@@ -70,13 +71,16 @@ button:hover {
 .signinbtn {
 	margin-left: 110px;
 	width: 50%;
+	margin-top:20px;
 }
 
 .forgot {
 	color: #000000;
 	margin-left: 20px;
-	width: 30%;
 }
+.forgot span a
+{
+text-decoration:none;}
 
 .pass {
 	color: #000000;
@@ -98,23 +102,60 @@ button:hover {
 	<div class="logofile">
 		<img src="https://i.ibb.co/PmyZDDS/logo.png">
 	</div>
-	<form action="sign_in" class="signin" method="post">
+	<form action="sign_in" class="signin" method="post" id="cpa-form">
 		<div class="container">
 			<h3>Sign in</h3>
 			<label for="uname"><b>Username</b></label> <input type="text"
-				placeholder="Enter Username" name="username" required> <label
+				placeholder="Enter Username" name="username" id="username"> <label
 				for="pwd"><b>Password</b></label> <input type="password"
-				placeholder="Enter Password" name="psw" required>
+				placeholder="Enter Password" name="psw" id="psw">
 
-			<button type="submit" class="signinbtn">Login</button>
+			<button type="submit" class="signinbtn" id="subbtn">Login</button>
 		</div>
 
-		<div class="forgot">
-			<span> <a class="pass" href="forgot" target="_blank">Forgot
-					password?</a></span> <br /> <span> <a class="pass" href="sign_up">Sign
-					up</a></span>
+		<div class="forgot" style="display:flex;margin-top:20px">
+			<span> 
+				<a class="pass" href="forgot" >Forgot password?</a>
+			</span> 
+			<span style="position: absolute;right: 0;margin-right: 17px;"> 
+				<a class="pass" href="sign_up">Sign up</a>
+			</span>
 		</div>
 	</form>
 
 </body>
 </html>
+<script>
+        $("#cpa-form").submit(function(e)
+		{
+		    var o = $('#username').val();
+		    var p = $('#psw').val();
+
+		    if(o=='')
+		    {
+		    	$('#username').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#username').css('border','1px solid green');
+		    	$('#username').css('background','#fff !important');
+		    }
+		    
+		    if(p=='')
+		    {
+		    	$('#psw').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#psw').css('background','#fff !important');
+		    	$('#psw').css('border','1px solid green');
+		    }
+		    
+		    if(o!='' && p!='')
+		    {
+		    	return ture;
+		    }
+		});
+</script>

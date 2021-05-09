@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import java.sql.Blob;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -18,12 +18,8 @@ public class User {
 	private String lastName;
 	private String email;
 	private String phone;
-//	private Blob image;
-	private Date date;
+	private LocalDate dob;
 
-	
-
-	
 
 	public int getId() {
 		return id;
@@ -72,22 +68,13 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
-//	public Blob getImage() {
-//		return image;
-//	}
-//
-//	public void setImage(Blob image) {
-//		this.image = image;
-//	}
-//	
-	
-	public Date getDate() {
-		return date;
+
+	public LocalDate getDob() {
+		return dob;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
 	}
 
 }

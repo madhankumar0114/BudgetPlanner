@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>SIGN UP</title>
 <style>
 h3 {
@@ -23,8 +24,17 @@ body {
 * {
 	box-sizing: border-box
 }
+.form-control{
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
 
-input[type=text], input[type=password], input[type=tel] {
+}
+
+input[type=text], input[type=password], input[type=tel], input[type=date] {
 	width: 100%;
 	padding: 12px 20px;
 	margin: 8px 0;
@@ -39,9 +49,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus{
 }
 
 .signup {
-	margin: 10px auto;
-	max-width: 600px;
-	height: 780px;
+	margin: 5px auto;
+	max-width: 680px;
+	height: 1000px;
 	position: relative;
 	border-radius: 20px;
 	background: #FFFFFF;
@@ -68,11 +78,14 @@ button:hover {
 
 .signupbtn {
 	margin-left: 140px;
+	margin-top:20px;
 	width: 50%;
 }
 
 .container {
-	padding: 16px;
+	padding: 25px;
+
+	
 }
 
 .forgot {
@@ -83,6 +96,7 @@ button:hover {
 
 .pass {
 	color: #000000;
+	text-decoration:none;
 }
 
 .logofile {
@@ -101,41 +115,161 @@ button:hover {
 	<div class="logofile">
 		<img src="https://i.ibb.co/PmyZDDS/logo.png">
 	</div>
-	<form action="create_user" class="signup" method="post">
+	<form action="create_user" class="signup"  method="post" id="cpa-form">
 		<div class="container">
 			<h3>Sign Up</h3>
 				<label for="Username" class="label"><b>Username</b></label> 
-				<input type="text" placeholder="Username" name="username" required /> 
+				<input type="text" placeholder="Username" name="username" id="username" /> 
 				
 				<label for="Firstname" class="label"><b>First Name</b></label> 
-				<input type="text" placeholder="First name" name="firstname" required /> 
+				<input type="text" placeholder="First name" name="firstname" id="firstname" /> 
 				
 				<label for="Lastname" class="label"><b>Last Name</b></label> 
-				<input type="text" placeholder="Last name" name="lastname" required /> 
+				<input type="text" placeholder="Last name" name="lastname" id="lastname" /> 
+				
+				<label for="dob" class="label"><b>Date Of Birth</b></label>
+				<input type="date" placeholder="dob" name="dob"  id="dob"/> 
 				
 				<label for="Phone"><b>Phone Number</b></label> 
-				<input type="tel" placeholder="phone" name="phone" required /> 
+				<input type="tel" placeholder="phone" name="phone" id="phone"  /> 
 				
 				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Email" name="email" required /> 
+				<input type="text" placeholder="Email" name="email"  id="email"/> 
+			
 				
 				<label for="psw"><b>Password</b></label> 
-				<input type="password"placeholder="Enter Password" name="psw" required /> 
+				<input type="password"placeholder="Enter Password" name="psw" id="opass"  /> 
 				
 				<label for="pswrepeat"><b>Repeat Password</b></label> 
-				<input type="password" placeholder="Repeat Password" name="pswrepeat"required />
-
+				<input type="password" placeholder="Repeat Password" onkeyup="checkpass()" id="rpass" name="pswrepeat" />
+						
+						<label for="question"><b>Secret Question</b></label>
+						<select name="secret_question" id="secret_question"	class="form-control">												
+								<option value="friend">What is your best friend's name?</option>
+								<option value="sports">Who is your favorite sports person?</option>
+								<option value="movie">Who is your favorite movie star?</option>
+						</select>
+						
+				<label for="secret_answer"><b>Secret Answer</b></label> 
+				<input type="text" placeholder="Secret Answer" name="secret_answer" id="secret_answer" />
+											
 			<div class="clearfix">
-				<button type="submit" class="signupbtn">Sign Up</button>
+				<button type="submit" class="signupbtn" id="subbtn">Sign Up</button>
 			</div>
+		
 
 			<div class="forgot">
-				<span> <a class="pass" href="sign_in">Sign in</a></span><br /> <span>
-					<a class="pass" href="forgot" target="_blank">Forgot password?</a>
-				</span>
+				<a class="pass" href="sign_in">Sign in</a>
 			</div>
 		</div>
 	</form>
 
 </body>
 </html>
+
+
+<script>
+
+	function checkpass()
+	{
+		var rpass = $('#rpass').val();
+		var opass = $('#opass').val();
+		if(rpass !== opass)
+		{
+			$('#rpass').css('border','1px solid red');
+		}
+		else
+		{
+			$('#rpass').css('border','1px solid green');
+		}
+	}
+	
+	
+
+	$("#cpa-form").submit(function(e)
+	{
+		    var o = $('#username').val();
+		    var p = $('#firstname').val();
+		    var i = $('#lastname').val();
+		    var k = $('#phone').val();
+		    var s = $('#email').val();
+		    var c = $('#opass').val();
+		    var d = $('#rpass').val();
+		    if(o=='')
+		    {
+		    	$('#username').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#username').css('border','1px solid green');
+		    }
+		    
+		    if(p=='')
+		    {
+		    	$('#firstname').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#firstname').css('border','1px solid green');
+		    }
+		    
+		    if(i=='')
+		    {
+		    	$('#lastname').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#lastname').css('border','1px solid green');
+		    }
+		    
+		    if(k=='')
+		    {
+		    	$('#phone').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#phone').css('border','1px solid green');
+		    }
+		    if(s=='')
+		    {
+		    	$('#email').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#email').css('border','1px solid green');
+		    	
+		    }
+		    if(c=='')
+		    {
+		    	$('#opass').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#opass').css('border','1px solid green');
+		    	
+		    }
+		    if(d=='')
+		    {
+		    	$('#rpass').css('border','1px solid red');
+		    	return false;
+		    }
+		    else
+		    {
+		    	$('#rpass').css('border','1px solid green');
+		    	
+		    }
+		    
+		    if(o!='' && p!='' && i!='' && k!='' && s!='')
+		    {
+		    	return ture;
+		    }
+	});
+
+
+</script>

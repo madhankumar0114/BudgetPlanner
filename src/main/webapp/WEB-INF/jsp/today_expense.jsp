@@ -1,7 +1,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>TODAY EXPENSE</title>
 
 <link rel="stylesheet"
@@ -76,7 +78,7 @@ a {
 
 .form-class {
 	background: #fff;
-	padding: 50px;
+	/* padding: 50px; */
 	border-radius: 20px;
 	border-bottom: 4px solid #68b3ff;
 	box-shadow: 0 16px 44px -6px #00000036;
@@ -220,51 +222,45 @@ ul.nav.navbar-nav a {
 	padding: 20px;
 	border-bottom: 3px solid #5fb7e2;
 }
+.leftbox {
+    min-height: 455px;
+    background: #4aaddd ;
+    padding: 30px;
+    margin-top: 65px;
+}
+.rightbox {
+    background: #fff;
+    min-height: 600px;
+    padding: 30px;
+    box-shadow: -4px 0 21px #44444433;
+}
+span#placeamount {
+    font-size: 18px;
+    font-weight: 800;
+}
 </style>
 </head>
 
 <body>
+
 	<div class="logofile">
 		<img src="https://i.ibb.co/PmyZDDS/logo.png">
 	</div>
 	<nav class="navbar navbar">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#"></a>
-			</div>
+		<div style="width:65%;margin:0 auto">
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="home">Home</a></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">PROFILE UPDATE<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="profile">PROFILE</a></li>
-							<li><a href="forgot" target="_blank">CHANGE PASSWORD</a></li>
-						</ul></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">EXPENSE MANAGE <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="today_expense">TODAY EXPENSE</a></li>
-							<li><a href="future_expense">FUTURE EXPENSE</a></li>
-							<li><a href="past_expense">PAST EXPENSE</a></li>
-						</ul></li>
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">OTHER <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="calculator" target="_blank">CALCULATOR</a></li>
-							<li><a href="calendar" target="_blank">CALENDAR</a></li>
-						</ul></li>
+					<li><a href="home">Home</a></li>
+					<li><a href="profile">Profile</a></li>
+					<li class="active"><a href="today_expense">Today Expense</a></li>
+					<li><a href="future_expense">Future Expense</a></li>
+					<li><a href="past_expense">Past Expense</a></li>
+					<li class=""><a href="expense_search">Search Expense</a></li>
+					<li class=""><a href="expense_summary">Expense Summary</a></li>	
+					<li class=""><a href="session">Session</a></li>		
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="sign_in"><span
-							class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+					<li><a href="/logout" id="logOut"><span class="glyphicon glyphicon-log-in"  ></span> Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -273,129 +269,193 @@ ul.nav.navbar-nav a {
 	<section>
 
 		<div class="container">
-			<div class="form-class mt-5 mb-5">
+			<div class="mt-5 mb-5">
 				<div class="row">
-					<div class="col-lg-4 col-12 col-md-6">
-						<h4>TODAY EXPENSE</h4>
-					
-						<form action="create_expense" method="post">
-					
-
-							<div class="row">
-								<div class="form-group">
-
-									<div class="col-lg-12 col-12">
-										<label>Expense Name</label> <input type="text"
-											name="expensename" id="expensename" class="form-control">
+				 <div class="col-12 col-lg-12">
+					<div class="col-lg-4 col-12 col-md-6 mt-5" style="padding:0 !important">
+						<div class="leftbox">
+						    <h4 style="color:#fff" class="mb-4"><b>TODAY EXPENSE</b></h4>
+							<form action="today_expense" method="post" id="cpa-form">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-lg-12 col-12">
+											<input type="hidden" name="expenseid" id="expenseid" class="form-control" value="${exps.expenseId}" style="border: none !important;border-radius: 0 !important;">
+										</div>
+										<div class="col-lg-12 col-12">
+											<label  style="font-weight:200;color:#fff">Name</label> 
+											<input type="text" name="expensename" id="expensename" class="form-control" value="${exps.expenseName}" style="border: none !important;border-radius: 0 !important;"><br>
+										</div>
+										<div class="col-lg-12 col-12">
+											<label  style="font-weight:200;color:#fff">Category</label> <label for="category"></label>
+											<select name="category" id="category"	class="form-control" style="border: none !important;border-radius: 0 !important;">
+												<option value="${exps.category}">${exps.category}</option>
+												<option value="Food and beverages">Food and beverages</option>
+												<option value="Household bills">Household bills</option>
+												<option value="Groceries">Groceries</option>
+												<option value="Electronics">Electronics</option>
+												<option value="Clothing">Clothing</option>
+												<option value="Investment">Investment</option>
+												<option value="EMI">EMI</option>
+												<option value="Health and medicines">Health and medicines</option>
+												<option value="Education and stationery">Education and stationery</option>
+												<option value="Other">Other</option>
+											</select>
+										</div>
+										<div class="col-lg-12 col-12">
+											<label  style="font-weight:200;color:#fff"> Expense Type</label> <label for="expensetype"></label>
+											<select name="expensetype" id="expensetype"	class="form-control" style="border: none !important;border-radius: 0 !important;">
+												<option value="${exp.expenseType}">${exp.expenseType}</option>
+												<option value="Cash">Cash</option>
+												<option value="Online">Online</option>
+												<option value="Debit Card">Debit Card</option>
+												<option value="Credit Card">Credit Card</option>
+												<option value="Other">Other</option>
+											</select>
+										</div>
+										<div class="col-lg-12 col-12">
+											<label  style="font-weight:200;color:#fff">Amount</label> 
+											<input type="text" name="amount" id="amount" class="form-control" value="${exps.amount}" style="border: none !important;border-radius: 0 !important;"><br>
+										</div>
+										<div class="form-action-buttons">
+											<input type="submit" class="btn btn-success" id="subbtn" style="background: #fff;color: #444;" value="Submit">
+										</div>
 									</div>
-
-									<div class="col-lg-12 col-12">
-										<label> Expense Type</label> <label for="expensetype"></label>
-										<select name="expensetype" id="expensetype"
-											class="form-control">
-											<option value="Cash">Cash</option>
-											<option value="Online">Online</option>
-											<option value="Debit Card">Debit Card</option>
-											<option value="Credit Card">Credit Card</option>
-											<option value="Other">Other</option>
-										</select>
-									</div>
-
-									<div class="col-lg-12 col-12">
-										<label>Amount</label> <input type="text" name="amount"
-											id="amount" class="form-control">
-									</div>
-
-
-									<div class="form-action-buttons">
-										<input type="submit" id="subbtn" value="Submit"class="btn btn-info"> 
-											<input type="hidden" value=""id="sl"> 
-											<input type="hidden" value="0" id="amou">
-									</div>
-
 								</div>
-							</div>
-						</form>
-					
-						
+							</form>
+						</div>
 					</div>
-					<div class="col-lg-8 col-12 col-md-6">
-						<table class="table table-responsive" id="exspense_manage">
-							<thead>
-								<tr>
-									<th>Expense Name</th>
-									<th>Expense Type</th>
-									<th>Amount</th>
-									<th>Option</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${expenses}" var="expense">
+					
+					<div class="col-lg-8 col-12 col-md-6 mt-5 mb-4" style="padding:0 !important">
+						<div class="rightbox">
+							<table class="table table-responsive" id="exspense_manage">
+								<thead>
 									<tr>
-										<td>${expense.expenseName}</td>
-										<td>${expense.expenseType}</td>
-										<td>${expense.amount}</td>
+										<th>Expense Name</th>
+										<th>Category</th>
+										<th>Expense Type</th>
+										<th>Amount</th>
+										<th>Date</th>
+										<th style="text-align:center;">Option</th>
 									</tr>
-								</c:forEach>
-							</tbody>
-						</table>
-						<div class="col-lg-12 col-12 col-md-12">
-							<div align="right">
-								Total = <span class="amou"></span>/-
+								</thead>
+								<tbody>
+	
+									<c:forEach items="${expenses}" var="expense">
+										<tr>
+											<td>${expense.expenseName}</td>
+											<td>${expense.category}</td>
+											<td>${expense.expenseType}</td>
+											<td>
+												${expense.amount}
+												<input type="hidden" class="totalamount" value="${expense.amount}">
+											</td>
+											<td>${expense.date}</td>
+											<td align="right">
+											   <a type="button" class="btn btn-success" href="/today_expense?id=${expense.expenseId}&sel=${expense.expenseType}"><i class="fa fa-edit"></i></a> 
+											   <a type="button" class="btn btn-danger" href="/delete_expense?id=${expense.expenseId}&page=today"><i class="fa fa-trash"></i></a>
+											</td>
+										</tr>
+									</c:forEach>
+	
+								</tbody>
+							</table>
+							<hr style="margin: 0px 0 10px 0;">
+							<div class="col-lg-12 col-12 col-md-12">
+								<div style="text-align: right;">
+								      Total : <span id ="placeamount" class="expense"></span><span style="font-size: 18px;font-weight: 800;">/-</span>
+								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<footer class="footer">
-		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved @developed by</h5>
+		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved
+			@developed by</h5>
 	</footer>
 </body>
 
 </html>
 
-<!-- <script>
-var qtyTotal = 0;
-var priceTotal = 0;
+<script>
 
-function addProduct() {
-    var productID = document.getElementById("expenseName").value;
-    var product_desc = document.getElementById("expenseType").value;
-    var qty = document.getElementById("amount").value;
-    // qtyTotal = qtyTotal + parseInt(qty);
-    //document.getElementById("qtyTotals").innerHTML=qtyTotal;
-   
-    //priceTotal = priceTotal + parseInt(price);
-    //document.getElementById("priceTotals").innerHTML=priceTotal;
-    var table=document.getElementById("exspense_manage");
-    var row=table.insertRow(-1);
-    var cell1=row.insertCell(0);
-    var cell2=row.insertCell(1);
-    var cell3=row.insertCell(2);
-    var cell4=row.insertCell(3);
-    var cell5=row.insertCell(4);
-    var cell6=row.insertCell(5);
-    cell1.innerHTML=expenseName;
-    cell2.innerHTML=expenseType;
-    cell3.innerHTML=amount;        
-     
-    cell4.innerHTML=' <button type="button" onClick="editProduct();"/>Edit</button>'; 
-    cell5.innerHTML ='<button type="button" onClick="deleteProduct(this);">Delete</button>';             
-}
+	var getUrlParameter = function getUrlParameter(sParam) 
+	{
+	    var sPageURL = window.location.search.substring(1),
+	        sURLVariables = sPageURL.split('&'),
+	        sParameterName,
+	        i;
+	
+	    for (i = 0; i < sURLVariables.length; i++) {
+	        sParameterName = sURLVariables[i].split('=');
+	
+	        if (sParameterName[0] === sParam) {
+	            return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+	        }
+	    }
+	    return false;
+	};
+	
+	var tech = getUrlParameter('sel');
+	$('select option[value="'+tech+'"]').attr("selected",true);
+	
+    $("#amount").keypress(function (e) 
+	{
+		if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
+	});
+	
+	$("#cpa-form").submit(function(e)
+	{
+	    var o = $('#expensename').val();
+	    var p = $('#expensetype').val();
+	    var i = $('#amount').val();
+	    if(o=='')
+	    {
+	    	$('#expensename').css('border','1px solid red');
+	    	return false;
+	    }
+	    else
+	    {
+	    	$('#expensename').css('border','1px solid green');
+	    }
+	    
+	    if(p=='')
+	    {
+	    	$('#expensetype').css('border','1px solid red');
+	    	return false;
+	    }
+	    else
+	    {
+	    	$('#expensetype').css('border','1px solid green');
+	    }
+	    
+	    if(i=='')
+	    {
+	    	$('#amount').css('border','1px solid red');
+	    	return false;
+	    }
+	    else
+	    {
+	    	$('#amount').css('border','1px solid green');
+	    }
+	    
+	    if(o!='' && p!='' && i!='')
+	    {
+	    	return ture;
+	    }
+	});
 
-function editProduct(){
-    
+// TOTAL EXPENSE VALUE
+	var sum = 0;
+	$('.totalamount').each(function()
+	{
+    	sum += parseFloat(this.value);
+	});	
+	$('#placeamount').html(sum);
+	
 
-    document.getElementById("expenseName").value = productID;
-    document.getElementById("expenseType").value = product_desc;
-    document.getElementById("amount").value = qty;
-    
-}
-function deleteProduct(node){    
-r=node.parentNode.parentNode;
-r.parentNode.removeChild(r);
-}
-</script> -->
+</script>
