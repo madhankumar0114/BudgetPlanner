@@ -60,11 +60,7 @@ body {
 	border-bottom: 4px solid #58b3e0;
 }
 
-label {
-	font-size: 18px;
-	font-weight: bold;
-	color: #000000;
-}
+
 
 form div.form-action-buttons {
 	text-align: right;
@@ -141,29 +137,6 @@ a {
 	margin-bottom: 80 !important;
 }
 
-.cardbody ul {
-	list-style: none;
-	margin: 20px 0;
-}
-
-.cardbox img {
-	border-radius: 100%;
-	box-shadow: 0 5px 15px #00000052;
-	padding: 20px;
-	background: #fff;
-}
-
-.cardbox {
-	width: 200px !important;
-	margin: 0 auto;
-}
-
-.cardbody ul li {
-	padding: 18px;
-	background: #fbfbfb;
-	margin-top: 10px;
-}
-
 .logofile {
 	text-align: center;
 	background: #fff;
@@ -186,51 +159,7 @@ ul.nav.navbar-nav a {
 	text-decoration: none;
 }
 
-element.style {
-	
-}
 
-.monthbox {
-	padding: 50px;
-	/*text-align: center;*/
-	background: #eee;
-	border-bottom: 3px solid #f4d75e;
-	transition: all 0.3s;
-}
-
-.monthbox:hover {
-	background: #fff;
-	box-shadow: 0 0 15px #0000002b;
-	border-radius: 10px;
-	transition: all 0.3s;
-}
-
-.monthbox .fa-calendar {
-	color: #4aaedd;
-	font-size: 24px;
-}
-
-.monthbox .fa-rupee {
-	color: #4aaedd;
-	font-size: 24px;
-}
-
-.month {
-	color: #000;
-	font-size: 20px;
-	margin-bottom: 11px;
-}
-
-.monthbox span {
-	color: #444;
-	font-size: 20px;
-}
-
-.graphbox {
-	background: #eee;
-	padding: 20px;
-	border-bottom: 3px solid #5fb7e2;
-}
 .leftbox {
     min-height: 400px;
     background: #19bf44;
@@ -290,7 +219,7 @@ span#placeamount {
 											<input type="hidden" name="expenseid" id="expenseid" class="form-control" value="${exp.expenseId}"  style="border: none !important;border-radius: 0 !important;">
 										</div>
 										<div class="col-lg-12 col-12">
-											<label  style="font-weight:200;color:#fff">Name</label> 
+											<label  style="font-weight:200;color:#fff">Expense Name</label> 
 											<input type="text" name="expensename" id="expensename" class="form-control" value="${exp.expenseName}" style="border: none !important;border-radius: 0 !important;"><br>
 										</div>
 										<div class="col-lg-12 col-12">

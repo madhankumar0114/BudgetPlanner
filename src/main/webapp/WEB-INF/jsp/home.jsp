@@ -22,7 +22,6 @@
   <link rel="stylesheet" type="text/css" href="https://mkworks.tech/jquery/css/hover-min.css" media="all">
   <link rel="stylesheet" type="text/css" href="https://mkworks.tech/jquery/css/creative.min.css">
 
-
 <style>
 * {
 	padding: 0;
@@ -259,6 +258,7 @@ label.lab {
 }
 .calendar-inner {
     max-width: calc(100% - 200px);
+    padding: 47px 30px;
 }
 
 .displayBox {
@@ -376,7 +376,7 @@ th[colspan="7"] {
 							</div>
 							<div class="col-lg-3 col-md-4 col-12">
 								<div class="firstbox">
-									<span class="boxIcon" style="padding:10px 35px !important">$</span>
+									<span class="boxIcon" style="padding:0px 35px !important">$</span>
 									<div class="firsttitle">
 										 Budget 
 								    </div>
@@ -460,12 +460,7 @@ th[colspan="7"] {
 					 </div>
 				</div>
 			</div>
-		<br><br><br><br>
-		
-		
-								
-								
-								
+		<br><br><br><br>				
  <!-- Current Month --> 
 		<c:forEach items="${Current}" var="expense" >
 			<input type="hidden" class="totalamount" value="${expense.amount}">
@@ -477,8 +472,7 @@ th[colspan="7"] {
 		
 	</section>
 	<footer class="footer">
-		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved
-			@developed by</h5>
+		<h5>BUDGET PLANNER & SAVINGS BOOSTER © 2021. All Rights Reserved | @developed by</h5>
 	</footer>
 </body>
 
@@ -489,8 +483,6 @@ $(document).ready(function(){
 	$('#eventListToggler').remove();
 	$('#sidebarToggler').remove();
 });
-
-
 
 /* Calendar */
  $('#evoCalendar').evoCalendar({

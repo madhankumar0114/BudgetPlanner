@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +25,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.demo.entity.Budget;
 import com.example.demo.entity.Credentials;
 import com.example.demo.entity.Expense;
-import com.example.demo.entity.LoginInfo;
+import com.example.demo.entity.AccountInfo;
 import com.example.demo.entity.Profile;
 import com.example.demo.entity.User;
 import com.example.demo.repo.BudgetRepository;
 import com.example.demo.repo.CredentialsRepository;
 import com.example.demo.repo.ExpenseRepository;
-import com.example.demo.repo.LoginInfoRepository;
+import com.example.demo.repo.ExpenseSummaryRepository;
+import com.example.demo.repo.AccountInfoRepository;
 import com.example.demo.repo.ProfileRepository;
 import com.example.demo.repo.UserRepository;
+import com.example.demo.view.ExpenseSummary;
+import com.example.demo.view.IExpenseSummary;
 import com.sun.research.ws.wadl.Response;
 
 @Controller
@@ -44,12 +48,12 @@ public class LoginController {
 	private UserRepository userRepository;
 	@Autowired
 	private BudgetRepository budgetRepository;
-	
+
 	@Autowired
-	private LoginInfoRepository loginRepository;
+	private AccountInfoRepository infoRepository;
 
 	private int userId;
-	private LoginInfo loginInfo;
+	private AccountInfo accInfo;
 
 	@Autowired
 	private CredentialsRepository credentialsRepository;
@@ -57,26 +61,30 @@ public class LoginController {
 	@Autowired
 	private ExpenseRepository expenseRepository;
 
+	@Autowired
+	private ExpenseSummaryRepository expenseSummaryRepository;
+
 	// LOGIN PAGE
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		return ("sign_in");
 	}
-	
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(ModelMap model) {
-		loginInfo.setLogoutTime(LocalDateTime.now());
-		loginRepository.save(loginInfo);
-		
-		loginInfo = null;
-		userId = 0;
-		
+
+	@RequestMapping(value = "/sign_in", method = RequestMethod.GET)
+	public String showsign_in(ModelMap model) {
 		return ("sign_in");
 	}
 
-	@RequestMapping(value = "/sign_in", method = RequestMethod.GET)
-	public String signin(ModelMap model) {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model) {
+		accInfo.setEndTime(LocalDateTime.now());
+		accInfo.setStatus(null);
+		infoRepository.save(accInfo);
+
+		accInfo = null;
+		userId = 0;
+
 		return ("sign_in");
 	}
 
@@ -88,20 +96,19 @@ public class LoginController {
 		Credentials user = credentialsRepository.findByUsernameAndPassword(userName, password);
 
 		if (user == null) {
-			return ("sign_in");
-
+			return "sign_in";
 		}
 
 		userId = user.getId();
-		
-		LoginInfo info = new LoginInfo();
-		info.setUserId(userId);
-		info.setLoginTime(LocalDateTime.now());
-		
-		loginRepository.save(info);
-		
-		loginInfo = info;
 
+		AccountInfo info = new AccountInfo();
+		info.setUserId(userId);
+		info.setStartTime(LocalDateTime.now());
+		info.setStatus("Current session");
+
+		infoRepository.save(info);
+
+		accInfo = info;
 		return ("home");
 	}
 
@@ -113,22 +120,60 @@ public class LoginController {
 	}
 
 	@PostMapping(value = "/forgot")
-	public String logini(@RequestParam(value = "username") String userName, @RequestParam(value = "email") String email,
-			@RequestParam(value = "secret_question") String secretQuestion,
+	public ModelAndView forgotPassword(@RequestParam(value = "username") String userName,
+			@RequestParam(value = "email") String email, @RequestParam(value = "secret_question") String secretQuestion,
 			@RequestParam(value = "secret_answer") String secretAnswer) {
-		Credentials credentials = credentialsRepository.findBySecretQuestionAndSecretAnswer(secretQuestion,
-				secretAnswer);
 		User user = userRepository.findByUsernameAndEmail(userName, email);
-
 		if (user == null) {
-			return ("forgot");
-
+			return new ModelAndView("/forgot");
 		}
 
-		userId = credentials.getId();
-		userId = user.getId();
+		Credentials credentials = credentialsRepository.findByUsernameAndSecretQuestionAndSecretAnswer(userName,
+				secretQuestion, secretAnswer);
 
-		return ("changepassword");
+		if (credentials == null) {
+			return new ModelAndView("/forgot");
+		}
+
+		ModelAndView model = new ModelAndView("/changepassword");
+		model.addObject("userId", user.getId());
+
+		return model;
+	}
+
+	@PostMapping(value = "/changepassword")
+	public String changePassword(@RequestParam(value = "user_id", required = false) String userId,
+			@RequestParam(value = "password") String password,
+			@RequestParam(value = "confirm_psw") String confirmPassword) {
+		if (!password.equals(confirmPassword)) {
+			return "error";
+		}
+
+		int parsedUserId = 0;
+		if (!userId.isBlank()) {
+			parsedUserId = Integer.parseInt(userId);
+		}
+
+		int uId = (parsedUserId > 0) ? parsedUserId : this.userId;
+		User user = userRepository.findByUserId(uId);
+
+		Credentials credentials = credentialsRepository.findByUsername(user.getUsername());
+		credentials.setPassword(password);
+
+		credentialsRepository.save(credentials);
+
+		AccountInfo info = new AccountInfo();
+		info.setUserId(uId);
+		info.setStartTime(LocalDateTime.now());
+		info.setEndTime(LocalDateTime.now());
+		info.setStatus("Password changed");
+
+		infoRepository.save(info);
+
+		this.userId = 0;
+		accInfo = null;
+
+		return ("sign_in");
 	}
 
 //	CHANGE PASSWORD
@@ -138,7 +183,7 @@ public class LoginController {
 		return ("changepassword");
 	}
 
-	// SignUp
+// SignUp
 
 	@RequestMapping(value = "/sign_up", method = RequestMethod.GET)
 	public String signUp(ModelMap model) {
@@ -166,8 +211,6 @@ public class LoginController {
 		user.setPhone(phone);
 		user.setEmail(email);
 		user.setDob(LocalDate.parse(dob));
-		
-		
 
 		Credentials credentials = new Credentials();
 		credentials.setUsername(userName);
@@ -177,16 +220,16 @@ public class LoginController {
 
 		userRepository.save(user);
 		credentialsRepository.save(credentials);
-		
+
 		userId = user.getId();
-		
-		LoginInfo info = new LoginInfo();
+
+		AccountInfo info = new AccountInfo();
 		info.setUserId(userId);
-		info.setLoginTime(LocalDateTime.now());
-		
-		loginRepository.save(info);
-		loginInfo = info;
-		
+		info.setStartTime(LocalDateTime.now());
+
+		infoRepository.save(info);
+		accInfo = info;
+
 		return ("home");
 	}
 
@@ -200,22 +243,12 @@ public class LoginController {
 		return ("error");
 	}
 
-	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
-	public String showcalendarpage(ModelMap model) {
-		return ("calendar");
-	}
-
-	@RequestMapping(value = "/calculator", method = RequestMethod.GET)
-	public String showcalculatorpage(ModelMap model) {
-		return ("calculator");
-	}
-
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 
-	// TODAY EXPENSE
+// TODAY EXPENSE
 
 	@PostMapping("/today_expense")
 	public ModelAndView Today(@RequestParam(value = "expenseid", required = false) String expenseId,
@@ -275,7 +308,7 @@ public class LoginController {
 		return model;
 	}
 
-	// FUTURE EXPENSE
+// FUTURE EXPENSE
 
 	@PostMapping("/future_expense")
 	public ModelAndView Future(@RequestParam(value = "expenseid", required = false) String expenseId,
@@ -336,6 +369,8 @@ public class LoginController {
 		}
 		return model;
 	}
+
+// DELETE
 
 	@RequestMapping(value = "/delete_expense", method = RequestMethod.GET)
 	public ModelAndView deleteExpense(@RequestParam(value = "id") String id,
@@ -435,7 +470,7 @@ public class LoginController {
 		return model;
 	}
 
-	// EXPENSE SEARCH
+// EXPENSE SEARCH
 
 	@PostMapping("/expense_search")
 	public ModelAndView searchExpense(@RequestParam(value = "startdate") String start,
@@ -453,7 +488,7 @@ public class LoginController {
 		model.addObject("expenses", expenses);
 		model.addObject("start", startDate);
 		model.addObject("end", endDate);
-		
+
 		return model;
 	}
 
@@ -463,7 +498,7 @@ public class LoginController {
 
 	}
 
-	// profile
+// profile
 
 	@PostMapping("/profile")
 	public ModelAndView profile(@RequestParam(value = "budget_id") String bId,
@@ -494,7 +529,7 @@ public class LoginController {
 		model.addObject("user", user);
 		model.addObject("current", newBudget);
 		model.addObject("budgets", budgets);
-		model.addObject("avgExpense", avgExpense);
+		model.addObject("avgExpense", round(avgExpense));
 
 		return model;
 	}
@@ -511,24 +546,23 @@ public class LoginController {
 		model.addObject("user", user);
 		model.addObject("current", currentBudget);
 		model.addObject("budgets", budgets);
-		model.addObject("avgExpense", avgExpense);
+		model.addObject("avgExpense", round(avgExpense));
 
 		return model;
 	}
 
-	// HOME
+// HOME
 
 	@RequestMapping(value = "home", method = RequestMethod.GET)
 	public String home(Map<String, Object> model) {
 
 		LocalDate today = LocalDate.now();
 		Budget budget = budgetRepository.findCurrentBudget(userId);
-		
+
 		model.put("Current", expenseRepository.findByUserIdAndDate(userId, today));
 		model.put("Future", expenseRepository.findFutureExpense(userId, today));
 		model.put("budget", budget.getBudget());
 		model.put("income", budget.getMonthlyIncome());
-		
 
 		return "/home";
 
@@ -537,13 +571,43 @@ public class LoginController {
 //    SESSION
 
 	@RequestMapping(value = "/session", method = RequestMethod.GET)
-	public String showsessionpage(ModelMap model) {
-		return ("session");
+	public ModelAndView showsessionpage() {
+		ModelAndView model = new ModelAndView("/session");
+
+		List<AccountInfo> infoList = infoRepository.findByUserIdOrderByAccountInfoIdDesc(userId);
+		model.addObject("infoList", infoList);
+		return model;
 	}
 
+	
+	
+	
 // EXPENSE SUMMARY
 	@RequestMapping(value = "/expense_summary", method = RequestMethod.GET)
-	public String expense_summary(ModelMap model) {
+	public String redirectToExpenseSummary(ModelMap model) {
 		return ("expense_summary");
+	}
+
+	@PostMapping(value = "/expense_summary")
+	public ModelAndView showExpenseSummary(@RequestParam(value = "time") String timeLine) {
+		ModelAndView model = new ModelAndView("/expense_summary");
+		List<IExpenseSummary> summary = expenseSummaryRepository.findOverallExpenseSummary(userId);
+		double sum = summary.stream().mapToDouble(IExpenseSummary::getAmount).sum();
+
+		List<ExpenseSummary> sList = new ArrayList<>();
+		for (IExpenseSummary s : summary) {
+			ExpenseSummary es = new ExpenseSummary();
+			es.setCategory(s.getCategory());
+			es.setAmount(s.getAmount());
+			es.setPercentage(round(es.getAmount() / sum));
+			sList.add(es);
+		}
+		model.addObject("summary", sList);
+		return model;
+
+	}
+
+	private double round(double value) {
+		return ((double) Math.round(value * 100)) / 100d;
 	}
 }

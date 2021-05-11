@@ -241,18 +241,21 @@ span#placeamount {
 					<div class="col-lg-4 col-12 col-md-6 mt-5" style="padding:0 !important">
 						<div class="leftbox">
 						    <h4 style="color:#fff" class="mb-4"><b>EXPENSE SUMMARY</b></h4>
-							<form action="expense_search" method="post"  id="cpa-form">
+							<form action="expense_summary" method="post"  id="cpa-form">
 								<div class="row">
 									<div class="form-group mt-4">
 
-				                     	<div class="col-lg-12 col-12 mb-2">
-				                        	<label  style="font-weight:200;color:#fff">Start Date</label>
-				                        	<input type="date" name="startdate" id="startdate" class="form-control" style="border: none !important;border-radius: 0 !important;">
-				                    	</div>
-				                    	<div class="col-lg-12 col-12 mb-2">
-				                        	<label  style="font-weight:200;color:#fff">End Date</label>
-				                        	<input type="date" name="enddate" id="enddate" class="form-control" style="border: none !important;border-radius: 0 !important;">
-				                    	</div>
+				                     	<div class="col-lg-12 col-12">
+											<label  style="font-weight:200;color:#fff">Time line</label> <label for="time"></label>
+											<select name="time" id="time"	class="form-control" style="border: none !important;border-radius: 0 !important;">												
+												<option value="Overall">Overall</option>
+												<option value="Current Month">Current Month</option>
+												<option value="Previous Month">Previous Month</option>
+												<option value="Past 6 Months">Past 6 Months</option>
+												<option value="Year To Date">Year To Date</option>
+												<option value="Last Year">Last Year</option>
+											</select>
+										</div>
 					                    <div class="form-action-buttons">
 					                        <input type="submit" id="subbtn" style="background: #fff;color: #444;" value="Submit" class="btn btn-info">
 					                    </div>
@@ -268,26 +271,17 @@ span#placeamount {
 							<table class="table table-responsive" id="exspense_manage">
 								<thead>
 									<tr>
-										<th>Expense Name</th>
-										<th>Expense Type</th>
+										<th>Category</th>
 										<th>Amount</th>
-										<th>Date</th>
-										<th style="text-align:center;">Option</th>
+										<th>Percentage</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${expenses}" var="expense">
+									<c:forEach items="${summary}" var="expense">
 										<tr>
-											<td>${expense.expenseName}</td>
-											<td>${expense.expenseType}</td>
-											<td>${expense.amount}
-											<input type="hidden" class="totalamount" value="${expense.amount}">
-											</td>
-											<td>${expense.date}</td>
-											<td  align="right">
-												<a type="button" class="btn btn-success" href="/future_expense?id=${expense.expenseId}"><i class="fa fa-edit"></i></a> 
-												<a type="button" class="btn btn-danger" href="/delete_expense?id=${expense.expenseId}"><i class="fa fa-trash"></i></a>
-											</td>
+											<td>${expense.category}</td>
+											<td>${expense.amount}</td>
+											<td>${expense.percentage}</td>							
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -47,17 +47,6 @@ text-align: center;
     border-bottom: 4px solid #58b3e0;
 }
 
-label{
-font-size: 18px;
-font-weight: bold;
-color: #000000;
-}
-
-
-form div.form-action-buttons{
-    text-align: right;
-}
-
 a{
     cursor: pointer;
     text-decoration: underline;
@@ -71,11 +60,12 @@ a{
     display:none;
 }
 .form-class {
-    background: #fff;
+    background: #fdfeff00;
     padding: 50px;
     border-radius: 20px;
-    border-bottom: 4px solid #68b3ff;
-    box-shadow: 0 16px 44px -6px #00000036;
+    border-bottom: 4px solid #4baedd;
+    box-shadow: 0 26px 35px 14px #00000036;
+}
 }
 .mt-5{
 	margin-top:25px;
@@ -117,25 +107,6 @@ a{
 .mb-8{
 	margin-bottom:80 !important;
 }
-.cardbody ul {
-    list-style: none;
-    margin: 20px 0;
-}
-.cardbox img {
-    border-radius: 100%;
-    box-shadow: 0 5px 15px #00000052;
-    padding: 20px;
-    background: #fff;
-}
-.cardbox {
-    width: 200px !important;
-    margin: 0 auto;
-}
-.cardbody ul li {
-    padding: 18px;
-    background: #fbfbfb;
-    margin-top: 10px;
-}
 
 
 .logofile{    text-align: center;
@@ -153,41 +124,7 @@ ul.nav.navbar-nav a {
     text-decoration: none;
 }
 
-.monthbox {
-    padding: 50px;
-    /*text-align: center;*/
-    background: #eee;
-    border-bottom: 3px solid #f4d75e;
-    transition: all 0.3s;
-}
-.monthbox:hover {
-    background: #fff;
-    box-shadow: 0 0 15px #0000002b;
-    border-radius: 10px;
-    transition: all 0.3s;
-}
-.monthbox .fa-calendar {
-    color: #4aaedd;
-    font-size: 24px;
-}
-.monthbox .fa-rupee {
-    color: #4aaedd;
-    font-size: 24px;
-}
-.month {
-    color: #000;
-    font-size: 20px;
-        margin-bottom: 11px;
-}
-.monthbox span {
-    color: #444;
-    font-size: 20px;
-}
-.graphbox {
-    background: #eee;
-    padding: 20px;
-    border-bottom: 3px solid #5fb7e2;
-}
+
 </style>
 </head>
 
@@ -221,23 +158,29 @@ ul.nav.navbar-nav a {
 					<div class="row">
 						<div class="col-lg-8  col-12 col-md-6">
 						<h4>Login Info</h4>
-						<form action="past_expense" method="post"  id="cpa-form">
-							
-			                </form>
+						
 						</div>
 						<div class="col-lg-8 col-12 col-md-6">
-							<table class="table table-responsive" id="exspense_manage">
+							<table class="table table-responsive" id="sessions">
 				                    <thead>
 				                        <tr>
 				                           
-				                            <th>UserId</th>
-				                            <th>Login Time</th>
-				                            <th>Logout Time</th>
-				                            <th>Date</th>
+				                            <th>Start Time</th>
+				                            <th>End Time</th>
+				                            <th>Remarks</th>
 				                           
 				                        </tr>
+				                        				                    	
+
 				                    </thead>
 				                    <tbody>
+				                    <c:forEach items="${infoList}" var="info">
+				                    <tr>
+											<td>${info.startTime}</td>
+											<td>${info.endTime}</td>
+											<td>${info.status}</td>											
+										</tr>
+				                    </c:forEach>	
 							</tbody>
 				            </table>
 				   

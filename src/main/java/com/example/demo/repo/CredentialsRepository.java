@@ -7,8 +7,9 @@ import com.example.demo.entity.Credentials;
 public interface CredentialsRepository extends JpaRepository<Credentials, Integer> {
 
 	Credentials findByUsernameAndPassword(String username, String password);
-	
+
 	Credentials findByUsername(String username);
 
-	Credentials findBySecretQuestionAndSecretAnswer(String secretQuestion,String secretAnswer);
+	Credentials findByUsernameAndSecretQuestionAndSecretAnswer(String username, String secretQuestion,
+			String secretAnswer);
 }

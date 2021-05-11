@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.entity.LoginInfo;
-import com.example.demo.repo.LoginInfoRepository;
+import com.example.demo.entity.AccountInfo;
+import com.example.demo.repo.AccountInfoRepository;
 
 public class LoginInfoServiceImpl implements LoginInfoService {
 	
 	@Autowired
-	private LoginInfoRepository  loginInfoRepository;
+	private AccountInfoRepository  loginInfoRepository;
 	
-	public List<LoginInfo> getAllExpense() {
+	public List<AccountInfo> getAllExpense() {
 		return loginInfoRepository.findAll();
 	}
 

@@ -56,8 +56,18 @@ body {
 
 label {
 	font-size: 18px;
-	font-weight: bold;
+	font-weight: 100;
 	color: #000000;
+}
+
+.average{
+
+	background-color:#4aafff99 ;
+	font-size: 18px;
+	font-weight: 100;
+	color: #000000;
+	box-shadow: 0px 0 33px -14px #9e9e9e;
+	margin-top: 20px;
 }
 
 form div.form-action-buttons {
@@ -76,11 +86,11 @@ a {
 }
 
 .form-class {
-	background: #fff;
+	background: #addda9;
 	padding: 50px;
 	border-radius: 20px;
 	border-bottom: 4px solid #68b3ff;
-	box-shadow: 0 16px 44px -6px #00000036;
+	box-shadow: 0 16px 44px -6px #00091391;
 }
 
 .mt-5 {
@@ -253,73 +263,59 @@ ul.nav.navbar-nav a {
 			<div class="form-class mt-5 mb-5">
 				<div class="row">
 					<div class="col-lg-4 col-12 col-md-6">
-						<h4>PROFILE</h4>
-
-						<form method="post" action="profile" id="cpa-form">
-
+						<h4>PROFILE</h4><hr>
 							<div class="row">
 								<div class="form-group">
-								
-
-									<div class="col-lg-12 col-12">
-										<input type="hidden" name="user_id" id="user_id"
-											class="form-control" value="${user.id}">
-									</div>
-									<div class="col-lg-12 col-12">
-										<input type="hidden" name="budget_id" id="budget_id"
-											class="form-control" value="${current.budgetId}">
-									</div>
-									
-					
 									
 									<div class="col-lg-12 col-12">
-										<label>Name : ${user.firstName} ${user.lastName}</label> 
+										<label><i class="fa fa-user"></i> ${user.firstName} ${user.lastName}</label> 
 									</div>
 
 									<div class="col-lg-12 col-12">
-										<label>Email : ${user.email}</label> 
+										<label><i class="fa fa-envelope"></i> ${user.email}</label> 
 									</div>
 									<div class="col-lg-12 col-12">
-										<label>Date Of Birth : ${user.dob}</label> 
+										<label><i class="fa fa-calendar"></i> ${user.dob}</label> 
 									</div>
 
 									<div class="col-lg-12 col-12">
-										<label>Phone : ${user.phone}</label> 
+										<label><i class="fa fa-phone"></i> ${user.phone}</label> 
 									</div>
-			
-									
-									
 									<div class="col-lg-12 col-12">
-										<label>Average Of Expense : ${avgExpense}</label> 
+										<label class="average">Average Of Expense : ${avgExpense}</label> <br><br><br>
 									</div>
-									
-										<div class="col-lg-12 col-12">
-										<label>Monthly Income</label> <input type="text" value="${current.monthlyIncome}" name="income" id="income"
-											class="form-control" ><br>
-									</div>
-									
-										<div class="col-lg-12 col-12">
-										<label>Budget</label> <input type="text" value="${current.budget}" name="budget" id="budget"
-											class="form-control"><br>
-									</div>
-									
-
-
-									<div class="form-action-buttons">
-										<input type="submit" id="subbtn" value="Update"
-											class="btn btn-info">
-									</div>
-
-									<a href="changepassword">Change Password ?</a>
+									<a href="changepassword" style="margin-left:20px">Change Password ?</a>
 								</div>
 							</div>
-						</form>
+						
 					</div>
-					<div class="col-lg-12 col-12 col-md-6">
+					<div class="col-lg-8 col-12 col-md-6">
+					
+						<form method="post" action="profile" id="cpa-form">
+							<div class="col-lg-12 col-12">
+								<input type="hidden" name="user_id" id="user_id"
+											class="form-control" value="${user.id}">
+							</div>
+							<div class="col-lg-12 col-12">
+								<input type="hidden" name="budget_id" id="budget_id"
+											class="form-control" value="${current.budgetId}">
+							</div>
+							<div class="col-lg-12 col-12">
+								<label>Monthly Income</label> 
+								<input type="text" value="${current.monthlyIncome}" name="income" id="income" class="form-control" >
+							</div>
+							<div class="col-lg-12 col-12">
+								<label>Budget</label> 
+								<input type="text" value="${current.budget}" name="budget" id="budget"class="form-control">
+							</div>
+							<div align="right">
+								<input type="submit" id="subbtn" value="Update"	class="btn btn-info" style="margin:20px 0">
+							</div>
+						</form>
+					
 						<table class="table table-responsive" id="budget">
 							<thead>
 								<tr>
-
 									<th>Start Date</th>
 									<th>End Date</th>									
 									<th>Monthly Income</th>
@@ -329,12 +325,10 @@ ul.nav.navbar-nav a {
 							<tbody>
 								<c:forEach items="${budgets}" var="budget">
 									<tr>
-
 										<td>${budget.startDate}</td>
 										<td>${budget.endDate}</td>
 										<td>${budget.monthlyIncome}</td>
 										<td>${budget.budget}</td>
-										
 									</tr>
 								</c:forEach>
 							</tbody>

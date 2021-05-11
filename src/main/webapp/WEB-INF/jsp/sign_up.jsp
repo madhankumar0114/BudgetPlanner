@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <title>SIGN UP</title>
 <style>
@@ -24,34 +25,9 @@ body {
 * {
 	box-sizing: border-box
 }
-.form-control{
-	width: 100%;
-	padding: 12px 20px;
-	margin: 8px 0;
-	display: inline-block;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-
-}
-
-input[type=text], input[type=password], input[type=tel], input[type=date] {
-	width: 100%;
-	padding: 12px 20px;
-	margin: 8px 0;
-	display: inline-block;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-}
-
-input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus{
-	background-color: #ddd;
-	outline: none;
-}
-
 .signup {
 	margin: 5px auto;
-	max-width: 680px;
-	height: 1000px;
+	max-width: 880px;
 	position: relative;
 	border-radius: 20px;
 	background: #FFFFFF;
@@ -59,7 +35,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=tel]:focus{
 	border: 6px;
 	box-shadow: 0 10px 30px #00000052;
 }
-
 /* Set a style for all buttons */
 button {
 	background-color: #4CAF50;
@@ -74,12 +49,6 @@ button {
 
 button:hover {
 	opacity: 1;
-}
-
-.signupbtn {
-	margin-left: 140px;
-	margin-top:20px;
-	width: 50%;
 }
 
 .container {
@@ -107,63 +76,64 @@ button:hover {
 }
 
 .logofile img {
-	width: 220px;
+	width: 200px;
 }
+.mt-3
+{padding-top:30px}
 </style>
 </head>
 <body>
 	<div class="logofile">
 		<img src="https://i.ibb.co/PmyZDDS/logo.png">
 	</div>
+	<br><br>
 	<form action="create_user" class="signup"  method="post" id="cpa-form">
-		<div class="container">
+		<div style="padding:0 30px"><br><br>
 			<h3>Sign Up</h3>
-				<label for="Username" class="label"><b>Username</b></label> 
-				<input type="text" placeholder="Username" name="username" id="username" /> 
-				
-				<label for="Firstname" class="label"><b>First Name</b></label> 
-				<input type="text" placeholder="First name" name="firstname" id="firstname" /> 
-				
-				<label for="Lastname" class="label"><b>Last Name</b></label> 
-				<input type="text" placeholder="Last name" name="lastname" id="lastname" /> 
-				
-				<label for="dob" class="label"><b>Date Of Birth</b></label>
-				<input type="date" placeholder="dob" name="dob"  id="dob"/> 
-				
-				<label for="Phone"><b>Phone Number</b></label> 
-				<input type="tel" placeholder="phone" name="phone" id="phone"  /> 
-				
-				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Email" name="email"  id="email"/> 
-			
-				
-				<label for="psw"><b>Password</b></label> 
-				<input type="password"placeholder="Enter Password" name="psw" id="opass"  /> 
-				
-				<label for="pswrepeat"><b>Repeat Password</b></label> 
-				<input type="password" placeholder="Repeat Password" onkeyup="checkpass()" id="rpass" name="pswrepeat" />
-						
-						<label for="question"><b>Secret Question</b></label>
-						<select name="secret_question" id="secret_question"	class="form-control">												
-								<option value="friend">What is your best friend's name?</option>
-								<option value="sports">Who is your favorite sports person?</option>
-								<option value="movie">Who is your favorite movie star?</option>
-						</select>
-						
-				<label for="secret_answer"><b>Secret Answer</b></label> 
-				<input type="text" placeholder="Secret Answer" name="secret_answer" id="secret_answer" />
-											
-			<div class="clearfix">
-				<button type="submit" class="signupbtn" id="subbtn">Sign Up</button>
-			</div>
-		
-
-			<div class="forgot">
-				<a class="pass" href="sign_in">Sign in</a>
-			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">				
+					<input type="text" placeholder="Username" name="username" id="username"  class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">				
+					<input type="text" placeholder="First name" name="firstname" id="firstname"  class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">			
+					<input type="text" placeholder="Last name" name="lastname" id="lastname"  class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">				
+					<input type="date" placeholder="dob" name="dob"  id="dob" class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<input type="tel" placeholder="phone" name="phone" id="phone"   class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<input type="text" placeholder="Email" name="email"  id="email" class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<input type="password"placeholder="Enter Password" name="psw" id="opass"   class="form-control"> 
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<input type="password" placeholder="Repeat Password" onkeyup="checkpass()" id="rpass" name="pswrepeat" class="form-control">
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<select name="secret_question" id="secret_question"	class="form-control">												
+						<option value="friend">What is your best friend's name?</option>
+						<option value="sports">Who is your favorite sports person?</option>
+						<option value="movie">Who is your favorite movie star?</option>
+					</select>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 col-sm-12 mt-3">
+					<input type="text" placeholder="Secret Answer" name="secret_answer" id="secret_answer"  class="form-control">	
+				</div>
+				<div class="col-lg-9 col-md-9 col-12 col-sm-12 mt-3">
+					<a class="pass" href="sign_in">Sign in</a>
+				</div>
+				<div class="col-lg-3 col-md-3 col-12 col-sm-12 mt-3">
+					<button type="submit" class="btn btn-success" id="subbtn">Sign Up</button>
+				</div>
+			</div><br><br>
 		</div>
 	</form>
-
 </body>
 </html>
 

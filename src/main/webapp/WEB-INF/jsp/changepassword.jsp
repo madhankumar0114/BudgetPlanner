@@ -103,11 +103,13 @@ button:hover {
 	<form action="changepassword" class="signup" method="post">
 		<div class="container">
 			<h3>Forgot / Change Password</h3>
+				<input type="hidden" name="user_id" id="user_id" class="form-control" value="${userId}" style="border: none !important;border-radius: 0 !important;">
+			
 				<label for="psw" class="label"><b>Enter Password</b></label> 
-				<input type="password" placeholder="enter password" name="psw" required /> 
+				<input type="password" placeholder="enter password" name="password" required /> 
 					
 				<label for="psw"><b>Confirm Password</b></label> 
-				<input type="password"placeholder="confirm password" name="psw" required /> 
+				<input type="password"placeholder="confirm password" name="confirm_psw" required /> 
 				
 			<div class="clearfix">
 				<button type="submit" class="signupbtn">Reset</button>

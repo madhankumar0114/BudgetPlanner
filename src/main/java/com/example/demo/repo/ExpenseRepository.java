@@ -15,8 +15,10 @@ import com.example.demo.entity.User;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
-
+	
+	
 	List<Expense> findByUserIdAndDate(int userId, LocalDate date);
+	
 
 	@Query("SELECT e FROM Expense e WHERE e.userId = ?1 and date > ?2")
 	List<Expense> findFutureExpense(int userId, LocalDate date);
