@@ -4,6 +4,6 @@ public interface IExpenseSummary {
 
 	public String getCategory();
 
-	public Double getAmount();
+	public double getAmount();
 
 }

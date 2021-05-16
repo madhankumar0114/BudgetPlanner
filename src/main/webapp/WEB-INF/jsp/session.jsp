@@ -60,7 +60,7 @@ a{
     display:none;
 }
 .form-class {
-    background: #fdfeff00;
+    background: #8ed08861;
     padding: 50px;
     border-radius: 20px;
     border-bottom: 4px solid #4baedd;

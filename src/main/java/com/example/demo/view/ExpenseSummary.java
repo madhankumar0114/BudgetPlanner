@@ -11,7 +11,7 @@ public class ExpenseSummary implements IExpenseSummary {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public Double getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 	public void setAmount(double amount) {

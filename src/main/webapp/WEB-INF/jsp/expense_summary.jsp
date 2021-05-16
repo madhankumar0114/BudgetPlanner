@@ -54,7 +54,6 @@ font-weight: bold;
 color: #000000;
 }
 
-
 form div.form-action-buttons{
     text-align: right;
 }
@@ -65,8 +64,6 @@ a{
     color: #0000ee;
     margin-right: 4px;
 }
-
-
 
 .hide{
     display:none;
@@ -118,26 +115,6 @@ a{
 .mb-8{
 	margin-bottom:80 !important;
 }
-.cardbody ul {
-    list-style: none;
-    margin: 20px 0;
-}
-.cardbox img {
-    border-radius: 100%;
-    box-shadow: 0 5px 15px #00000052;
-    padding: 20px;
-    background: #fff;
-}
-.cardbox {
-    width: 200px !important;
-    margin: 0 auto;
-}
-.cardbody ul li {
-    padding: 18px;
-    background: #fbfbfb;
-    margin-top: 10px;
-}
-
 
 .logofile{    text-align: center;
     background: #fff;
@@ -154,47 +131,13 @@ ul.nav.navbar-nav a {
     text-decoration: none;
 }
 
-.monthbox {
-    padding: 50px;
-    /*text-align: center;*/
-    background: #eee;
-    border-bottom: 3px solid #f4d75e;
-    transition: all 0.3s;
-}
-.monthbox:hover {
-    background: #fff;
-    box-shadow: 0 0 15px #0000002b;
-    border-radius: 10px;
-    transition: all 0.3s;
-}
-.monthbox .fa-calendar {
-    color: #4aaedd;
-    font-size: 24px;
-}
-.monthbox .fa-rupee {
-    color: #4aaedd;
-    font-size: 24px;
-}
-.month {
-    color: #000;
-    font-size: 20px;
-        margin-bottom: 11px;
-}
-.monthbox span {
-    color: #444;
-    font-size: 20px;
-}
-.graphbox {
-    background: #eee;
-    padding: 20px;
-    border-bottom: 3px solid #5fb7e2;
-}
 .leftbox {
-    min-height: 455px;
-    background: #fb6b1f;
+    min-height: 299px;
+    background: #4aadddc4;
     padding: 30px;
-    margin-top: 75px;
+    margin-top: 118px;
 }
+	
 .rightbox {
     background: #fff;
     min-height: 600px;
@@ -205,6 +148,14 @@ span#placeamount {
     font-size: 18px;
     font-weight: 800;
 }
+
+
+element.style {
+    background: #fff;
+    color: #444;
+    margin-top: 28px;
+}
+
 </style>
 </head>
 
@@ -243,9 +194,8 @@ span#placeamount {
 						    <h4 style="color:#fff" class="mb-4"><b>EXPENSE SUMMARY</b></h4>
 							<form action="expense_summary" method="post"  id="cpa-form">
 								<div class="row">
-									<div class="form-group mt-4">
-
-				                     	<div class="col-lg-12 col-12">
+									<div class="form-group mt-6">
+				                     	<div class="col-lg-9 col-12">
 											<label  style="font-weight:200;color:#fff">Time line</label> <label for="time"></label>
 											<select name="time" id="time"	class="form-control" style="border: none !important;border-radius: 0 !important;">												
 												<option value="Overall">Overall</option>
@@ -257,7 +207,7 @@ span#placeamount {
 											</select>
 										</div>
 					                    <div class="form-action-buttons">
-					                        <input type="submit" id="subbtn" style="background: #fff;color: #444;" value="Submit" class="btn btn-info">
+					                        <input type="submit" id="subbtn" style="background: #fff;color: #444; margin-top: 28px;" value="Submit" class="btn btn-info">
 					                    </div>
 
 				                    </div>
@@ -286,12 +236,6 @@ span#placeamount {
 									</c:forEach>
 								</tbody>
 							</table>
-							<hr style="margin: 0px 0 10px 0;">
-							<div class="col-lg-12 col-12 col-md-12">
-								<div style="text-align: right;">
-								      Total : <span id ="placeamount" class="expense"></span><span style="font-size: 18px;font-weight: 800;">/-</span>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -306,47 +250,3 @@ span#placeamount {
 </body>
 
 </html>
-
-<script>
-$("#cpa-form").submit(function(e)
-		{
-		    var o = $('#startdate').val();
-		    var p = $('#enddate').val();
-
-		    if(o=='')
-		    {
-		    	$('#startdate').css('border','1px solid red');
-		    	return false;
-		    }
-		    else
-		    {
-		    	$('#startdate').css('border','1px solid green');
-		    }
-		    
-		    if(p=='')
-		    {
-		    	$('#enddate').css('border','1px solid red');
-		    	return false;
-		    }
-		    else
-		    {
-		    	$('#enddate').css('border','1px solid green');
-		    }
-		    
-		   
-		    
-		    
-		    if(o!='' && p!='')
-		    {
-		    	return ture;
-		    }
-		});
-		
-		
-var sum = 0;
-$('.totalamount').each(function()
-{
-	sum += parseFloat(this.value);
-});	
-$('#placeamount').html(sum);
-</script>

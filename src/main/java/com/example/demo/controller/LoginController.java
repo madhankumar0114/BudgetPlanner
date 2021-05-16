@@ -579,9 +579,6 @@ public class LoginController {
 		return model;
 	}
 
-	
-	
-	
 // EXPENSE SUMMARY
 	@RequestMapping(value = "/expense_summary", method = RequestMethod.GET)
 	public String redirectToExpenseSummary(ModelMap model) {
@@ -599,7 +596,7 @@ public class LoginController {
 			ExpenseSummary es = new ExpenseSummary();
 			es.setCategory(s.getCategory());
 			es.setAmount(s.getAmount());
-			es.setPercentage(round(es.getAmount() / sum));
+			es.setPercentage(round((es.getAmount() / sum) * 100));
 			sList.add(es);
 		}
 		model.addObject("summary", sList);
